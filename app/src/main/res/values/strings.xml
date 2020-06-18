@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Strictly Gains</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">Workouts</string>
+    <string name="tab_text_2">Goals</string>
+    <string name="tab_text_3">Profile</string>
+    <string name="tab_text_4">Progress</string>
 </resources>
