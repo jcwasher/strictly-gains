@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.strictlygains.Fragment1;
-import com.example.strictlygains.Fragment2;
-import com.example.strictlygains.Fragment3;
-import com.example.strictlygains.Fragment4;
+import com.example.strictlygains.WorkoutFragment;
+import com.example.strictlygains.GoalFragment;
+import com.example.strictlygains.ProfileFragment;
+import com.example.strictlygains.ProgressFragment;
 import com.example.strictlygains.R;
 
 /**
@@ -34,16 +34,16 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = new Fragment1();
+                fragment = new WorkoutFragment();
                 break;
             case 1:
-                fragment = new Fragment2();
+                fragment = new GoalFragment();
                 break;
             case 2:
-                fragment = new Fragment3();
+                fragment = new ProfileFragment();
                 break;
             case 3:
-                fragment = new Fragment4();
+                fragment = new ProgressFragment();
                 break;
         }
         return fragment;

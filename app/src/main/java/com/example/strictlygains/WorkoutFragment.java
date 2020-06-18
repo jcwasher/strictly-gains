@@ -10,12 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.widget.Button;
 
-public class Fragment1 extends Fragment implements View.OnClickListener{
+public class WorkoutFragment extends Fragment implements View.OnClickListener{
     Button myButton;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment1_layout, container, false);
+        View view = inflater.inflate(R.layout.workout_layout, container, false);
         myButton = view.findViewById(R.id.button);
         myButton.setOnClickListener(this);
         return view;
