@@ -41,7 +41,7 @@ public class WorkoutCreateActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(WorkoutCreateActivity.this, list.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkoutCreateActivity.this, adapter.getItem(position), Toast.LENGTH_SHORT).show();
             }
         });
 

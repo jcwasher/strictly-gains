@@ -40,18 +40,19 @@
         app:rippleColor="#FFFFFF"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText"
-        style="@style/Base.Widget.MaterialComponents.AutoCompleteTextView"
         android:layout_width="146dp"
         android:layout_height="48dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:text="Add New Workout"
+        android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/floatingActionButton" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
