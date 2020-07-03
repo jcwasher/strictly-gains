@@ -7,51 +7,51 @@ public class Set {
     private boolean warmup;
     private int rpe;
 
-    public Set(int w, int rep, int rpe){
+    public Set(int w, int rep, int rp) {
         weight = w;
         reps = rep;
         success = false;
         warmup = false;
-        rpe = rpe;
+        rpe = rp;
     }
 
-    public void setWeight(int w){
+    public void setWeight(int w) {
         weight = w;
     }
 
-    public void setReps(int r){
+    public void setReps(int r) {
         reps = r;
     }
 
-    public void setSuccess(boolean s){
+    public void setSuccess(boolean s) {
         success = s;
     }
 
-    public void setWarmup(boolean w){
+    public void setWarmup(boolean w) {
         warmup = w;
     }
 
-    public void setRPE(int r){
+    public void setRPE(int r) {
         rpe = r;
     }
 
-    public double getWeight(){
+    public double getWeight() {
         return weight;
     }
 
-    public int getReps(){
+    public int getReps() {
         return reps;
     }
 
-    public boolean isSuccess(){
+    public boolean isSuccess() {
         return success;
     }
 
-    public boolean isWarmup(){
+    public boolean isWarmup() {
         return warmup;
     }
 
-    public int getRPE(){
+    public int getRPE() {
         return rpe;
     }
 }
