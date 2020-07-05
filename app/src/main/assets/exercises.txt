@@ -1,0 +1,6 @@
+1,Bench Press,Upper Body
+2,Deadlift,Lower Body
+3,Back Squat,Lower Body
+4,Overhead Press,Upper Body
+5,Barbell Rows,Upper Body
+6,Front Squat,Lower Body
