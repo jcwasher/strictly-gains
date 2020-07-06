@@ -11,19 +11,21 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.strictlygains.data.Exercise;
+import com.example.strictlygains.data.Workout;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class WorkoutCreateActivity extends AppCompatActivity {
     SearchView search;
     ListView wList;
     ArrayList<String> list;
-    ArrayList<Exercise> exerciseList;
+    ArrayList<Exercise> exerciseList, userList;
     ArrayAdapter<String> adapter;
 
     @Override
@@ -35,6 +37,7 @@ public class WorkoutCreateActivity extends AppCompatActivity {
         wList = findViewById(R.id.workoutList);
         list = new ArrayList<String>();
         exerciseList = new ArrayList<Exercise>();
+        userList = new ArrayList<Exercise>();
 
         try{
             Scanner read = new Scanner( getAssets().open("exercises.txt") );
@@ -57,11 +60,16 @@ public class WorkoutCreateActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         wList.setAdapter(adapter);
         wList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(WorkoutCreateActivity.this, adapter.getItem(position), Toast.LENGTH_SHORT).show();
+                for(int i = 0; i < exerciseList.size(); i++) {
+                    if(Objects.equals(adapter.getItem(position), exerciseList.get(i).getName())) {
+                        userList.add(exerciseList.get(i));
+                        Toast.makeText(WorkoutCreateActivity.this, adapter.getItem(position) + " Added", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
+            // TODO: wrap userList up in a bundle and try to access in WorkoutFragment
         });
 
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -76,8 +84,5 @@ public class WorkoutCreateActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-
     }
 }

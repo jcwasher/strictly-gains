@@ -23,7 +23,6 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
         myButton.setOnClickListener(this);
         actionButton = view.findViewById(R.id.floatingActionButton);
         actionButton.setOnClickListener(this);
-
         return view;
     }
 
