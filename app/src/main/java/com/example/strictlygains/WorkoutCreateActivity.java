@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class WorkoutCreateActivity extends AppCompatActivity {
@@ -42,10 +43,12 @@ public class WorkoutCreateActivity extends AppCompatActivity {
             while( read.hasNext() )
                 exerciseList.add(new Exercise( read.nextInt(), read.next(), read.next() ));
 
+            read.close();
+
             for(int i = 0; i < exerciseList.size(); i++)
                 list.add( exerciseList.get(i).getName() );
 
-            read.close();
+            Collections.sort(list);
 
         } catch (IOException e) {
             e.printStackTrace();
