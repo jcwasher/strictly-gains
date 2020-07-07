@@ -24,9 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.strictlygains.R;
-import com.strictlygains.Register;
-import com.strictlygains.ui.login.LoginViewModel;
-import com.strictlygains.ui.login.LoginViewModelFactory;
+import com.strictlygains.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -127,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( new Intent(getBaseContext(), Register.class) );
+                startActivity( new Intent(getBaseContext(), RegisterActivity.class) );
             }
         });
     }

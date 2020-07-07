@@ -12,6 +12,7 @@ public class Program {
         id = i;
         name = n;
         difficulty = d;
+        workoutList = new ArrayList<>();
     }
 
     public void setID(int i) {

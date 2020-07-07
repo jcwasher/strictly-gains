@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,6 +52,8 @@ public class WorkoutCreateActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // TODO: create a cache file and write the list of exercises to it to display
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
         wList.setAdapter(adapter);

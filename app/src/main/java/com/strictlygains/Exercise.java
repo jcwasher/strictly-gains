@@ -12,6 +12,7 @@ public class Exercise {
         id = i;
         name = n;
         focus = f;
+        setList = new ArrayList<>();
     }
 
     public void setID(int i) {

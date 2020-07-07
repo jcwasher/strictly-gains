@@ -8,6 +8,7 @@ public class Workout {
 
     public Workout(int i) {
         id = i;
+        exerciseList = new ArrayList<>();
     }
 
     public void setID(int i) {
