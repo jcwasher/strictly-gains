@@ -1,4 +1,4 @@
-package com.strictlygains.data;
+package com.strictlygains;
 
 public class Set {
     private double weight;
