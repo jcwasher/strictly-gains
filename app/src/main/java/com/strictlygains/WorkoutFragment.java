@@ -13,14 +13,14 @@ import android.widget.Button;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class WorkoutFragment extends Fragment implements View.OnClickListener{
-    Button myButton;
+    Button startButton;
     FloatingActionButton actionButton;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.workout_layout, container, false);
-        myButton = view.findViewById(R.id.button);
-        myButton.setOnClickListener(this);
+        startButton = view.findViewById(R.id.button);
+        startButton.setOnClickListener(this);
         actionButton = view.findViewById(R.id.floatingActionButton);
         actionButton.setOnClickListener(this);
         return view;
@@ -31,7 +31,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     {
         switch (view.getId()) {
             case R.id.button:
-                myButton.setText("Working");
+                openStartWorkoutActivity();
                 break;
             case R.id.floatingActionButton:
                 openWorkoutCreateActivity();
@@ -44,6 +44,12 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     public void openWorkoutCreateActivity()
     {
         Intent intent = new Intent(getActivity(), WorkoutCreateActivity.class);
+        startActivity(intent);
+    }
+
+    public void openStartWorkoutActivity()
+    {
+        Intent intent = new Intent(getActivity(), StartWorkoutActivity.class);
         startActivity(intent);
     }
 

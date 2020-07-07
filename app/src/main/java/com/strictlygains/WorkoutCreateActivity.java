@@ -3,6 +3,7 @@ package com.strictlygains;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,19 +11,25 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.zip.Inflater;
 
-public class WorkoutCreateActivity extends AppCompatActivity {
+public class WorkoutCreateActivity extends AppCompatActivity implements View.OnClickListener{
     SearchView search;
     ListView wList;
     ArrayList<String> list;
     ArrayList<Exercise> exerciseList, userList;
     ArrayAdapter<String> adapter;
+    ChipGroup chipGroup;
+    Chip chip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,10 @@ public class WorkoutCreateActivity extends AppCompatActivity {
                     if(Objects.equals(adapter.getItem(position), exerciseList.get(i).getName())) {
                         userList.add(exerciseList.get(i));
                         Toast.makeText(WorkoutCreateActivity.this, adapter.getItem(position) + " Added", Toast.LENGTH_SHORT).show();
+                        chipGroup = findViewById(R.id.chipGroup);
+                        chip = (Chip) getLayoutInflater().inflate(R.layout.chip_layout, chipGroup, false);
+                        chip.setText(adapter.getItem(position));
+                        chipGroup.addView(chip);
                     }
                 }
             }
@@ -82,5 +93,13 @@ public class WorkoutCreateActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        Chip c = (Chip) v;
+        chipGroup.removeView(v);
+        Toast.makeText(WorkoutCreateActivity.this,  c.getText()+ " Removed", Toast.LENGTH_SHORT).show();
+
     }
 }
