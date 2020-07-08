@@ -8,6 +8,8 @@ public class Exercise {
     private String focus;
     private ArrayList<Set> setList;
 
+    public Exercise() { }
+
     public Exercise(int i, String n, String f) {
         id = i;
         name = n;
@@ -41,6 +43,10 @@ public class Exercise {
 
     public Set getSet(int setNum) {
         return setList.get(setNum - 1);
+    }
+
+    public void setSetList(ArrayList<Set> sList) {
+        setList.addAll(sList);
     }
 
     public void addSet(Set s) {

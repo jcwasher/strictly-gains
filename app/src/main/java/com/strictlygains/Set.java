@@ -7,6 +7,8 @@ public class Set {
     private boolean warmup;
     private int rpe;
 
+    public Set() { }
+
     public Set(int w, int rep, int rp) {
         weight = w;
         reps = rep;

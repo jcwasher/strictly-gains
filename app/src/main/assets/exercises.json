@@ -1,0 +1,34 @@
+{
+	"exercises" : [
+		{
+			"id": 1,
+			"name": "Bench Press",
+			"focus": "Upper Body"
+		},
+		{
+			"id": 2,
+			"name": "Deadlift",
+			"focus": "Lower Body"
+		},
+		{
+			"id": 3,
+			"name": "Back Squat",
+			"focus": "Lower Body"
+		},
+		{
+			"id": 4,
+			"name": "Overhead Press",
+			"focus": "Upper Body"
+		},
+		{
+			"id": 5,
+			"name": "Barbell Rows",
+			"focus": "Upper Body"
+		},
+		{
+			"id": 6,
+			"name": "Front Squat",
+			"focus": "Lower Body"
+		}
+	]
+}

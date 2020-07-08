@@ -6,6 +6,8 @@ public class Workout {
     private int id;
     private ArrayList<Exercise> exerciseList;
 
+    public Workout() { }
+
     public Workout(int i) {
         id = i;
         exerciseList = new ArrayList<>();
@@ -21,6 +23,10 @@ public class Workout {
 
     public Exercise getExercise(int exerciseNum) {
         return exerciseList.get(exerciseNum - 1);
+    }
+
+    public void setExerciseList(ArrayList<Exercise> eList) {
+        exerciseList.addAll(eList);
     }
 
     public void addExercise(Exercise e) {
