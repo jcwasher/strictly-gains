@@ -5,12 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.LayoutInflater;
+import java.util.zip.Inflater;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
-
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -89,16 +90,20 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()) {
-            case R.id.chipGroup:
-                Chip c = (Chip) v;
-                chipGroup.removeView(v);
-                //Toast.makeText(WorkoutCreateActivity.this,  c.getText()+ " Removed", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.saveButton:
-                DataHelper.saveExercises(this, userList);
-                startActivity( new Intent(this, MainActivity.class) );
-                break;
+        if (v.getId() == R.id.saveButton) {
+            DataHelper.saveExercises(this, userList);
+            startActivity(new Intent(this, MainActivity.class));
+        } else {
+            System.out.println(v.getId());
+            Chip c = (Chip) v;
+            for (int i = 0; i < userList.size(); i++) {
+                if (Objects.equals(c.getText(), userList.get(i).getName())) {
+                    userList.remove(i);
+                    break;
+                }
+            }
+            chipGroup.removeView(v);
+            //Toast.makeText(WorkoutCreateActivity.this,  c.getText()+ " Removed", Toast.LENGTH_SHORT).show();
         }
     }
 }

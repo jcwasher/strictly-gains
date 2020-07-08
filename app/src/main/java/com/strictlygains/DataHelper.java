@@ -45,11 +45,32 @@ class DataHelper {
 
     static void saveExercises(Context context, ArrayList<Exercise> list) {
         try {
-            File cacheFile = File.createTempFile("userexercises.json", null, context.getCacheDir());
-            FileWriter writer = new FileWriter(cacheFile);
-            JSONArray jsonArray = new JSONArray(list);
-            writer.write(jsonArray.toString());
-            writer.flush();
+            File file = new File(context.getFilesDir(), "userexercises.json");
+            FileWriter writer = new FileWriter(file);
+            JSONObject finalOutput = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+
+            for(int i = 0; i < list.size(); i++) {
+                try {
+                    JSONObject j = new JSONObject();
+                    j.put("id", list.get(i).getID());
+                    j.put("name", list.get(i).getName());
+                    j.put("focus", list.get(i).getFocus());
+                    j.put("setList", new JSONArray() );
+                    jsonArray.put(j);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+
+            try {
+                finalOutput.put("userexercises", jsonArray);
+                writer.write(finalOutput.toString(4));
+                writer.flush();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         } catch(IOException e) {
             e.printStackTrace();
         }
