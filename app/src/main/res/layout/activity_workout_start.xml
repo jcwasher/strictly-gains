@@ -32,11 +32,11 @@
         app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
     <TextView
-        android:id="@+id/textViewExerciseName"
+        android:id="@+id/exerciseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
-        android:text="Bench Press"
+        android:text=""
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +66,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewExerciseName" />
+        app:layout_constraintTop_toBottomOf="@+id/exerciseName" />
 
     <TextView
         android:id="@+id/textView6"
@@ -76,6 +76,44 @@
         android:text="Set 1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewExerciseName" />
+        app:layout_constraintTop_toBottomOf="@+id/exerciseName" />
+
+    <Button
+        android:id="@+id/nextExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next Exercise"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+
+    <Button
+        android:id="@+id/setSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:background="#66D34E"
+        android:text="Success"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/nextExercise"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintVertical_bias="0.693" />
+
+    <Button
+        android:id="@+id/setFailed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="76dp"
+        android:background="#EF2B2B"
+        android:text="Failure"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/nextExercise"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.859"
+        app:layout_constraintStart_toEndOf="@+id/setSuccess"
+        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintVertical_bias="0.693" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
