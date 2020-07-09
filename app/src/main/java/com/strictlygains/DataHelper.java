@@ -35,7 +35,7 @@ class DataHelper {
 
             for(int i = 0; i < jsonArray.length(); i++) {
                 JSONObject j = jsonArray.getJSONObject(i);
-                exercises.add( new Exercise( j.getInt("id"), j.getString("name"), j.getString("focus") ) );
+                exercises.add( new Exercise( j.getInt("id"), j.getInt("max"), j.getString("name"), j.getString("focus") ) );
             }
         } catch(JSONException e) {
             e.printStackTrace();
@@ -67,7 +67,7 @@ class DataHelper {
 
             for(int i = 0; i < jsonArray.length(); i++) {
                 JSONObject j = jsonArray.getJSONObject(i);
-                exercises.add( new Exercise( j.getInt("id"), j.getString("name"), j.getString("focus") ) );
+                exercises.add( new Exercise( j.getInt("id"), j.getInt("max"), j.getString("name"), j.getString("focus") ) );
             }
         } catch(JSONException e) {
             e.printStackTrace();
@@ -88,6 +88,7 @@ class DataHelper {
                 try {
                     JSONObject j = new JSONObject();
                     j.put("id", list.get(i).getID());
+                    j.put("max", list.get(i).getMax());
                     j.put("name", list.get(i).getName());
                     j.put("focus", list.get(i).getFocus());
                     j.put("setList", new JSONArray() );

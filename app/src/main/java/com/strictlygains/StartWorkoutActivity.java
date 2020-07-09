@@ -25,6 +25,7 @@ import java.util.Scanner;
 public class StartWorkoutActivity extends AppCompatActivity implements View.OnClickListener {
     int index = 0;
     TextView exerciseName;
+    TextView weightValue;
     ArrayList<Exercise> userList;
     Button nextExercise;
 
@@ -33,6 +34,7 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_start);
         exerciseName = findViewById(R.id.exerciseName);
+        weightValue = findViewById(R.id.weightValue);
         userList = DataHelper.loadExercises(this, "userexercises.json");
         nextExercise = findViewById(R.id.nextExercise);
         nextExercise.setOnClickListener(this);
@@ -41,13 +43,20 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        if(index < userList.size() - 1) {
-            index++;
-            exerciseName.setText(userList.get(index).getName());
-        }
-        else {
-            index = 0;
-            nextExercise.setClickable(false);
+        switch (v.getId()) {
+            case R.id.setSuccess:
+                userList.get(index).setMax( Integer.parseInt(weightValue.getText().toString()) );
+                break;
+            case R.id.nextExercise:
+                if (index < userList.size() - 1) {
+                    index++;
+                    exerciseName.setText(userList.get(index).getName());
+                } else {
+                    index = 0;
+                    nextExercise.setClickable(false);
+                    DataHelper.saveExercises(this, userList);
+                }
+                break;
         }
     }
 }

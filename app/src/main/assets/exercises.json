@@ -2,31 +2,37 @@
 	"exercises" : [
 		{
 			"id": 1,
+			"max": 0,
 			"name": "Bench Press",
 			"focus": "Upper Body"
 		},
 		{
 			"id": 2,
+			"max": 0,
 			"name": "Deadlift",
 			"focus": "Lower Body"
 		},
 		{
 			"id": 3,
+			"max": 0,
 			"name": "Back Squat",
 			"focus": "Lower Body"
 		},
 		{
 			"id": 4,
+			"max": 0,
 			"name": "Overhead Press",
 			"focus": "Upper Body"
 		},
 		{
 			"id": 5,
+			"max": 0,
 			"name": "Barbell Rows",
 			"focus": "Upper Body"
 		},
 		{
 			"id": 6,
+			"max": 0,
 			"name": "Front Squat",
 			"focus": "Lower Body"
 		}

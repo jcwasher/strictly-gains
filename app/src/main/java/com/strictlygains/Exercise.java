@@ -4,14 +4,16 @@ import java.util.ArrayList;
 
 public class Exercise {
     private int id;
+    private int max;
     private String name;
     private String focus;
     private ArrayList<Set> setList;
 
     public Exercise() { }
 
-    public Exercise(int i, String n, String f) {
+    public Exercise(int i, int m, String n, String f) {
         id = i;
+        max = m;
         name = n;
         focus = f;
         setList = new ArrayList<>();
@@ -20,6 +22,8 @@ public class Exercise {
     public void setID(int i) {
         id = i;
     }
+
+    public void setMax(int m) { max = m; }
 
     public void setName(String n) {
         name = n;
@@ -31,6 +35,10 @@ public class Exercise {
 
     public int getID() {
         return id;
+    }
+
+    public int getMax() {
+        return max;
     }
 
     public String getName() {
