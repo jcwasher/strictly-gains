@@ -35,7 +35,7 @@ public class GoalFragment extends Fragment {
         pieChart = (PieChart) view.findViewById(R.id.pieChart);
         userList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "userexercises.json");
         maxTextView = view.findViewById(R.id.maxTextView);
-        if (userList.size() > 0) {
+        if (userList != null) {
             max = String.valueOf(userList.get(index).getMax());
             name = userList.get(index).getName();
         }
