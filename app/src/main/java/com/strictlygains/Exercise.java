@@ -69,11 +69,4 @@ public class Exercise {
         setList.remove(index);
     }
 
-    public void startSet() {
-        // interact with UI? may be unnecessary
-    }
-
-    public void endSet() {
-        // interact with UI? may be unnecessary
-    }
 }
