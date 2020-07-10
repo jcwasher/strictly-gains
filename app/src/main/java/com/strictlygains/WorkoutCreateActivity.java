@@ -94,7 +94,6 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
             DataHelper.saveExercises(this, userList);
             startActivity(new Intent(this, MainActivity.class));
         } else {
-            System.out.println(v.getId());
             Chip c = (Chip) v;
             for (int i = 0; i < userList.size(); i++) {
                 if (Objects.equals(c.getText(), userList.get(i).getName())) {

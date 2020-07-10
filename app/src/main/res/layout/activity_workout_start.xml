@@ -7,19 +7,19 @@
     tools:context=".WorkoutCreateActivity">
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/repTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reps:"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/setSuccess"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
+        app:layout_constraintTop_toBottomOf="@+id/weightTV"
+        app:layout_constraintVertical_bias="0.396" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/repValue"
         android:layout_width="111dp"
         android:layout_height="64dp"
         android:layout_marginTop="296dp"
@@ -27,6 +27,9 @@
         android:inputType="number"
         android:textAlignment="center"
         android:textSize="30sp"
+        android:text="0"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,10 +49,10 @@
         app:layout_constraintVertical_bias="0.094" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/weightTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="224dp"
         android:text="Weight:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.19"
@@ -65,16 +68,21 @@
         android:inputType="number"
         android:textAlignment="center"
         android:textSize="30sp"
+        android:text="0"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exerciseName" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/setTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Set 1"
+        android:text="@string/set_num_start"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/exerciseName" />
@@ -89,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/repValue"
         app:layout_constraintVertical_bias="0.812" />
 
     <Button
@@ -103,7 +111,7 @@
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/nextExercise"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/repValue"
         app:layout_constraintVertical_bias="0.693" />
 
     <Button
@@ -118,7 +126,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.859"
         app:layout_constraintStart_toEndOf="@+id/setSuccess"
-        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/repValue"
         app:layout_constraintVertical_bias="0.693" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

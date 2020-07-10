@@ -9,12 +9,12 @@ public class Set {
 
     public Set() { }
 
-    public Set(int w, int rep, int rp) {
+    public Set(int w, int rep) {
         weight = w;
         reps = rep;
         success = false;
         warmup = false;
-        rpe = rp;
+        rpe = 0;
     }
 
     public void setWeight(int w) {

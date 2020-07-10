@@ -1,4 +1,5 @@
 <resources>
+    <string name="set_num_start">Set 1</string>
     <string name="app_name">Strictly Gains</string>
     <string name="tab_text_1">Workouts</string>
     <string name="tab_text_2">Goals</string>

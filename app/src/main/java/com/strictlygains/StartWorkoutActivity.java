@@ -1,61 +1,90 @@
 package com.strictlygains;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SearchView;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
 
 
 public class StartWorkoutActivity extends AppCompatActivity implements View.OnClickListener {
-    int index = 0;
-    TextView exerciseName;
-    TextView weightValue;
+    int exerciseIndex = 0;
+    int setIndex = 0;
+    int setNum = 1;
+    TextView exerciseName, setTV;
+    EditText weightValue, repValue;
     ArrayList<Exercise> userList;
-    Button nextExercise;
+    Button nextExercise, setSuccess, setFailure;
+    Workout currentWorkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_start);
+
         exerciseName = findViewById(R.id.exerciseName);
         weightValue = findViewById(R.id.weightValue);
-        userList = DataHelper.loadExercises(this, "userexercises.json");
+        weightValue.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean isFocus) {
+                if(isFocus)
+                    weightValue.setText("");
+            }
+        });
+
+        repValue = findViewById(R.id.repValue);
+        repValue.setOnFocusChangeListener(  new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean isFocus) {
+                if(isFocus)
+                    repValue.setText("");
+            }
+        });
+
+        setTV = findViewById(R.id.setTV);
         nextExercise = findViewById(R.id.nextExercise);
         nextExercise.setOnClickListener(this);
-        exerciseName.setText(userList.get(index).getName());
+        setSuccess = findViewById(R.id.setSuccess);
+        setSuccess.setOnClickListener(this);
+        setFailure = findViewById(R.id.setFailed);
+        setFailure.setOnClickListener(this);
+
+        userList = DataHelper.loadExercises(this, "userexercises.json");
+        currentWorkout = new Workout(1);
+        currentWorkout.setExerciseList(userList);
+        exerciseName.setText(currentWorkout.getExercise(exerciseIndex).getName());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.setSuccess:
-                userList.get(index).setMax( Integer.parseInt(weightValue.getText().toString()) );
+                currentWorkout.getExercise(exerciseIndex).addSet( new Set(Integer.parseInt(weightValue.getText().toString()), Integer.parseInt(repValue.getText().toString())) );
+                currentWorkout.getExercise(exerciseIndex).getSet(setIndex++).setSuccess(true);
+                setTV.setText(new String("Set " + ++setNum));
                 break;
             case R.id.nextExercise:
-                if (index < userList.size() - 1) {
-                    index++;
-                    exerciseName.setText(userList.get(index).getName());
+                if ( exerciseIndex < currentWorkout.getExerciseList().size() - 1 ) {
+                    exerciseName.setText(currentWorkout.getExercise(++exerciseIndex).getName());
+                    setIndex = 0;
+                    setNum = 1;
+                    setTV.setText(new String("Set " + setNum));
                 } else {
-                    index = 0;
                     nextExercise.setClickable(false);
-                    DataHelper.saveExercises(this, userList);
+                    DataHelper.saveWorkout(this, currentWorkout, "Workout 1");
+                    startActivity(new Intent(this, MainActivity.class));
                 }
+                break;
+            case R.id.setFailed:
+                currentWorkout.getExercise(exerciseIndex).addSet( new Set(Integer.parseInt(weightValue.getText().toString()), Integer.parseInt(repValue.getText().toString())) );
+                currentWorkout.getExercise(exerciseIndex).getSet(setIndex).setSuccess(false);
+                nextExercise.performClick();
                 break;
         }
     }

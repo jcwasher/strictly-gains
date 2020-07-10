@@ -49,20 +49,24 @@ public class Exercise {
         return focus;
     }
 
-    public Set getSet(int setNum) {
-        return setList.get(setNum - 1);
+    public Set getSet(int index) {
+        return setList.get(index);
     }
 
     public void setSetList(ArrayList<Set> sList) {
         setList.addAll(sList);
     }
 
+    public ArrayList<Set> getSetList() {
+        return setList;
+    }
+
     public void addSet(Set s) {
         setList.add(s);
     }
 
-    public void removeSet(int setNum) {
-        setList.remove(setNum - 1);
+    public void removeSet(int index) {
+        setList.remove(index);
     }
 
     public void startSet() {

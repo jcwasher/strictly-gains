@@ -21,8 +21,12 @@ public class Workout {
         return id;
     }
 
-    public Exercise getExercise(int exerciseNum) {
-        return exerciseList.get(exerciseNum - 1);
+    public Exercise getExercise(int index) {
+        return exerciseList.get(index);
+    }
+
+    public ArrayList<Exercise> getExerciseList() {
+        return exerciseList;
     }
 
     public void setExerciseList(ArrayList<Exercise> eList) {
@@ -33,7 +37,7 @@ public class Workout {
         exerciseList.add(e);
     }
 
-    public void removeExercise(int exerciseNum) {
-        exerciseList.remove(exerciseNum - 1);
+    public void removeExercise(int index) {
+        exerciseList.remove(index);
     }
 }

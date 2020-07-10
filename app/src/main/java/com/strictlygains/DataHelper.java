@@ -110,4 +110,48 @@ class DataHelper {
             e.printStackTrace();
         }
     }
+
+    static void saveWorkout(Context context, Workout w, String filename) {
+        try {
+            File file = new File(context.getFilesDir(), filename);
+            FileWriter writer = new FileWriter(file);
+            JSONObject finalOutput = new JSONObject();
+            JSONArray exerciseArray = new JSONArray();
+
+            for(int i = 0; i < w.getExerciseList().size(); i++) {
+                try {
+                    JSONObject exercise = new JSONObject();
+                    JSONArray setArray = new JSONArray();
+                    exercise.put("id", w.getExercise(i).getID());
+                    exercise.put("max", w.getExercise(i).getMax());
+                    exercise.put("name", w.getExercise(i).getName());
+                    exercise.put("focus", w.getExercise(i).getFocus());
+
+                    for(int j = 0; j < w.getExercise(i).getSetList().size(); j++) {
+                        JSONObject set = new JSONObject();
+                        set.put("weight", w.getExercise(i).getSet(j).getWeight());
+                        set.put("reps", w.getExercise(i).getSet(j).getReps());
+                        set.put("success", w.getExercise(i).getSet(j).isSuccess());
+                        setArray.put(set);
+                    }
+
+                    exercise.put("setList", setArray);
+                    exerciseArray.put(exercise);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+
+            try {
+                finalOutput.put(filename, exerciseArray);
+                writer.write(finalOutput.toString(4));
+                writer.flush();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
