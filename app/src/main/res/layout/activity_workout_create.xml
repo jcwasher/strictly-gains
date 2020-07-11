@@ -37,14 +37,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:clickable="true"
+        android:clickable="false"
         android:focusable="true"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        app:singleSelection="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workoutList" />
+        app:layout_constraintTop_toBottomOf="@+id/workoutList"
+        app:singleSelection="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveButton"

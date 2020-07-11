@@ -93,7 +93,7 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
         if (v.getId() == R.id.saveButton) {
             DataHelper.saveExercises(this, userList);
             startActivity(new Intent(this, MainActivity.class));
-        } else {
+        } else if (v.getId() != R.id.chipGroup){
             Chip c = (Chip) v;
             for (int i = 0; i < userList.size(); i++) {
                 if (Objects.equals(c.getText(), userList.get(i).getName())) {
@@ -101,7 +101,7 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
                     break;
                 }
             }
-            chipGroup.removeView(v);
+            chipGroup.removeView(v);   // Removes chip when clicked
             //Toast.makeText(WorkoutCreateActivity.this,  c.getText()+ " Removed", Toast.LENGTH_SHORT).show();
         }
     }
