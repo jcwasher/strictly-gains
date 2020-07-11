@@ -28,10 +28,10 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
 
-        image = findViewById(R.id.imageView);
+
         logo = findViewById(R.id.textView1);
 
-        image.setAnimation(topAnim);
+
         logo.setAnimation(topAnim);
 
         new Handler().postDelayed(new Runnable() {
