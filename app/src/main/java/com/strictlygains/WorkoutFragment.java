@@ -9,10 +9,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class WorkoutFragment extends Fragment implements View.OnClickListener{
+    private ArrayList<Exercise> userList;
+    private ListView wList;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -21,6 +31,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
         startButton.setOnClickListener(this);
         FloatingActionButton actionButton = view.findViewById(R.id.floatingActionButton);
         actionButton.setOnClickListener(this);
+        wList = view.findViewById(R.id.exerciseList);
         return view;
     }
 
@@ -36,6 +47,22 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "userexercises.json");
+
+        if(userList != null) {
+            ArrayList<String> list = new ArrayList<>();
+
+            for(int i = 0; i < userList.size(); i++)
+                list.add(userList.get(i).getName());
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
+            wList.setAdapter(adapter);
         }
     }
 

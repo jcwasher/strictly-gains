@@ -7,6 +7,16 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
+    <TextView
+        android:id="@+id/tvCW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Current Workout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/button"
         style="@style/Widget.AppCompat.Button"
@@ -46,6 +56,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/floatingActionButton" />
+
+    <ListView
+        android:id="@+id/exerciseList"
+        android:layout_width="409dp"
+        android:layout_height="213dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCW" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

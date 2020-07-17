@@ -49,8 +49,10 @@ public class GoalFragment extends Fragment implements AdapterView.OnItemSelected
         spinner = view.findViewById(R.id.spinner);
         list = new ArrayList<String>();
 
-       for (int i=0; i<userList.size(); i++)
-            list.add(userList.get(i).getName());
+        if(userList != null) {
+            for (int i=0; i<userList.size(); i++)
+                list.add(userList.get(i).getName());
+        }
 
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
