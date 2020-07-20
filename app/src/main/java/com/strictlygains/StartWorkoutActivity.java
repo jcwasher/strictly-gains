@@ -1,13 +1,17 @@
 package com.strictlygains;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class StartWorkoutActivity extends AppCompatActivity implements View.OnClickListener {
     int exerciseIndex = 0;
@@ -53,6 +57,8 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
         currentWorkout = new Workout(1);
         currentWorkout.setExerciseList(userList);
         exerciseName.setText(currentWorkout.getExercise(exerciseIndex).getName());
+        if(currentWorkout.getExerciseList().size() == 1)
+            nextExercise.setText(new String("Finish Workout"));
     }
 
     @Override
@@ -76,6 +82,8 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
             case R.id.nextExercise:
                 if ( exerciseIndex < currentWorkout.getExerciseList().size() - 1 ) {
                     exerciseName.setText(currentWorkout.getExercise(++exerciseIndex).getName());
+                    if( exerciseIndex == currentWorkout.getExerciseList().size() - 1)
+                        nextExercise.setText(new String("Finish Workout"));
                     setIndex = 0;
                     setNum = 1;
                     setTV.setText(new String("Set " + setNum));
@@ -84,7 +92,12 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
                     setIndex = 0;
                     setNum = 1;
                     nextExercise.setClickable(false);
-                    DataHelper.saveWorkout(this, currentWorkout, "Workout1.json");
+
+                    Date date = Calendar.getInstance().getTime();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmm", Locale.US);
+                    String dateString = sdf.format(date);
+
+                    DataHelper.saveWorkout(this, currentWorkout, new String( dateString + ".json") );
                     startActivity(new Intent(this, MainActivity.class));
                     // Update max weight
                     DataHelper.saveExercises(this, userList);
