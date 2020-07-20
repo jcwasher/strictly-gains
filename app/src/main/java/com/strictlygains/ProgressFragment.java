@@ -19,13 +19,63 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.OnDataPointTapListener;
 import com.jjoe64.graphview.series.Series;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class ProgressFragment extends Fragment {
+    private final int MAX_DATA_POINTS = 100000;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.progress_layout, container, false);
         GraphView graph = view.findViewById(R.id.graph);
+
+        ArrayList<Exercise> defaultExercises = DataHelper.loadExercises(Objects.requireNonNull(getContext()));
+        ArrayList<LineGraphSeries<DataPoint>> seriesList = new ArrayList<>();
+
+        // get directory where completed workouts are stored and list the files
+        File dir = new File(Objects.requireNonNull(getContext()).getFilesDir().toString());
+        File[] fList = dir.listFiles();
+
+        assert defaultExercises != null;
+        for(int i = 0; i < defaultExercises.size(); i++) {
+            seriesList.add(new LineGraphSeries<DataPoint>());
+        }
+
+        boolean[] flag = new boolean[seriesList.size()];
+
+        double x = 0;
+        if(fList != null) {
+            for (File f : fList) {
+                // ignore the workout template
+                if(!f.getName().equals("userexercises.json")) {
+                    // get the exercise list associated with workout tied to File f
+                    ArrayList<Exercise> eList = DataHelper.loadWorkoutExercises(getContext(), f.getName());
+                    x += 10; // increment x for new workout slot
+                    // parse through each exercise
+                    if (eList != null) {
+                        for(Exercise e : eList) {
+                            double localMax = 0; // base case
+                            // parse through each set and update localMax as needed
+                            for(Set s : e.getSetList()) {
+                                if(s.getWeight() > localMax)
+                                    localMax = s.getWeight();
+                            }
+                            seriesList.get(e.getID()-1).appendData(new DataPoint(x, localMax), true, MAX_DATA_POINTS);
+                            flag[e.getID()-1] = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < flag.length; i++) {
+            if(flag[i]) {
+                graph.addSeries(seriesList.get(i));
+            }
+        }
 
         graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
             @Override
@@ -35,30 +85,12 @@ public class ProgressFragment extends Fragment {
                     return super.formatLabel(value, isValueX);
                 } else {
                     // show currency for y values
-                    return super.formatLabel(value, isValueX) + "lbs";
+                    return super.formatLabel(value, isValueX) + " lbs";
                 }
             }
         });
 
-        double x = 0;
-        double y = 50;
-        double z = 50;
-
-        LineGraphSeries series1 = new LineGraphSeries<>();
-        LineGraphSeries series2 = new LineGraphSeries<>();
-
-        int numDataPoints = 10;
-        for (int i = 0; i < numDataPoints; i++){
-            x += 10;
-            y += 5;
-            z += 15;
-            series1.appendData(new DataPoint(x,y), true, 10);
-            series2.appendData(new DataPoint(x+.5,z), true, 10);
-        }
-
-
-
-        series1.setOnDataPointTapListener(new OnDataPointTapListener() {
+        /* series1.setOnDataPointTapListener(new OnDataPointTapListener() {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint) {
                 Toast.makeText(getActivity(), "Upper Body: Day/Weight: "+dataPoint, Toast.LENGTH_SHORT).show();
@@ -69,17 +101,8 @@ public class ProgressFragment extends Fragment {
             public void onTap(Series series, DataPointInterface dataPoint) {
                 Toast.makeText(getActivity(), "Lower Body: Day/Weight: "+dataPoint, Toast.LENGTH_SHORT).show();
             }
-        });
-
-        series1.setColor(Color.BLUE);
-        series2.setColor(Color.RED);
-        graph.addSeries(series1);
-        graph.addSeries(series2);
+        }); */
 
         return view;
-
     }
-
-
-
 }
