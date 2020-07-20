@@ -9,15 +9,19 @@ public class Set {
 
     public Set() { }
 
-    public Set(int w, int rep) {
+    public Set(double w, int rep) {
+        this(w, rep, false);
+    }
+
+    public Set(double w, int rep, boolean suc) {
         weight = w;
         reps = rep;
-        success = false;
+        success = suc;
         warmup = false;
         rpe = 0;
     }
 
-    public void setWeight(int w) {
+    public void setWeight(double w) {
         weight = w;
     }
 

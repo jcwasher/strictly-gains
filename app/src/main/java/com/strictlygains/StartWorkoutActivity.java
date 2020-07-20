@@ -71,7 +71,7 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
                 String weight = weightValue.getText().toString();
                 // if set weight is greater than Max, update Max
                 if (!weight.equals("0") && Integer.parseInt(weight) > userList.get(exerciseIndex).getMax()) {
-                    userList.get(exerciseIndex).setMax(Integer.parseInt(weight));
+                    userList.get(exerciseIndex).setMax(Double.parseDouble(weight));
                 }
                 break;
             case R.id.setFailed:
@@ -96,11 +96,10 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
                     Date date = Calendar.getInstance().getTime();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmm", Locale.US);
                     String dateString = sdf.format(date);
-
                     DataHelper.saveWorkout(this, currentWorkout, new String( dateString + ".json") );
-                    startActivity(new Intent(this, MainActivity.class));
                     // Update max weight
                     DataHelper.saveExercises(this, userList);
+                    startActivity(new Intent(this, MainActivity.class));
                 }
                 break;
             default:

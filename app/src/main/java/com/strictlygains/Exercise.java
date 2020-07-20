@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Exercise {
     private int id;
-    private int max;
+    private double max;
     private String name;
     private String focus;
     private ArrayList<Set> setList;
@@ -23,7 +23,7 @@ public class Exercise {
         id = i;
     }
 
-    public void setMax(int m) { max = m; }
+    public void setMax(double m) { max = m; }
 
     public void setName(String n) {
         name = n;
@@ -37,7 +37,7 @@ public class Exercise {
         return id;
     }
 
-    public int getMax() {
+    public double getMax() {
         return max;
     }
 

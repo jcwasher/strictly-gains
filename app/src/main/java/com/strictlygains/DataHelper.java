@@ -154,4 +154,42 @@ class DataHelper {
             e.printStackTrace();
         }
     }
+
+    static ArrayList<Exercise> loadWorkoutExercises(Context context, String filename) {
+        ArrayList<Exercise> exercises = new ArrayList<>();
+
+        String json = "";
+
+        try {
+            InputStream is = new FileInputStream( new File(context.getFilesDir(), filename));
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        try {
+            JSONObject obj = new JSONObject(json);
+            JSONArray jsonArray = obj.getJSONArray(filename);
+
+            for(int i = 0; i < jsonArray.length(); i++) {
+                JSONObject j = jsonArray.getJSONObject(i);
+                exercises.add( new Exercise( j.getInt("id"), j.getInt("max"), j.getString("name"), j.getString("focus") ) );
+
+                JSONArray jsonSetList = j.getJSONArray("setList");
+                for(int k = 0; k < jsonSetList.length(); k++) {
+                    JSONObject l = jsonSetList.getJSONObject(k);
+                    exercises.get(i).addSet(new Set( l.getDouble("weight"), l.getInt("reps"), l.getBoolean("success")));
+                }
+            }
+        } catch(JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return exercises;
+    }
 }
