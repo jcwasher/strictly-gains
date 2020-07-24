@@ -9,7 +9,12 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
+
 import com.strictlygains.ui.main.SectionsPagerAdapter;
+
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -26,6 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
+        // Initialize exerciseHistory file with default workouts
+        if (DataHelper.loadExercises(this, "exerciseHistory.json") == null) {
+            ArrayList<Exercise> exerciseList = DataHelper.loadExercises(this);
+            assert exerciseList != null;
+            DataHelper.updateExerciseHistory(this, exerciseList);
+        }
+
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,4 +52,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

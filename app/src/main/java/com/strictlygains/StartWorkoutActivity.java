@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
     int setNum = 1;
     TextView exerciseName, setTV;
     EditText weightValue, repValue;
-    ArrayList<Exercise> userList;
+    ArrayList<Exercise> userList, eHistoryList;
     Button nextExercise, setSuccess, setFailure;
     Workout currentWorkout;
 
@@ -54,6 +56,7 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
         setFailure.setOnClickListener(this);
 
         userList = DataHelper.loadExercises(this, "userexercises.json");
+        eHistoryList = DataHelper.loadExercises(this, "exerciseHistory.json" );
         currentWorkout = new Workout(1);
         currentWorkout.setExerciseList(userList);
         exerciseName.setText(currentWorkout.getExercise(exerciseIndex).getName());
@@ -69,10 +72,19 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
                 currentWorkout.getExercise(exerciseIndex).getSet(setIndex++).setSuccess(true);
                 setTV.setText(new String("Set " + ++setNum));
                 String weight = weightValue.getText().toString();
-                // if set weight is greater than Max, update Max
-                if (!weight.equals("0") && Integer.parseInt(weight) > userList.get(exerciseIndex).getMax()) {
-                    userList.get(exerciseIndex).setMax(Double.parseDouble(weight));
+                // Loop through exercise history. If set weight is greater than Max, update Max
+                if (eHistoryList != null)
+                for (int i=0; i<eHistoryList.size(); i++){
+                    if (eHistoryList.get(i).getName().equals(userList.get(exerciseIndex).getName())){
+                        if (!weight.equals("0") && Double.parseDouble(weight) > eHistoryList.get(i).getMax()){
+                            eHistoryList.get(i).setMax(Double.parseDouble(weight));
+                            Toast.makeText(this, String.valueOf(eHistoryList.get(i).getMax()), Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
+               //     if (!weight.equals("0") && Integer.parseInt(weight) > userList.get(exerciseIndex).getMax()) {
+               //         userList.get(exerciseIndex).setMax(Double.parseDouble(weight));
+
                 break;
             case R.id.setFailed:
                 currentWorkout.getExercise(exerciseIndex).addSet( new Set(Integer.parseInt(weightValue.getText().toString()), Integer.parseInt(repValue.getText().toString())) );
@@ -98,7 +110,9 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
                     String dateString = sdf.format(date);
                     DataHelper.saveWorkout(this, currentWorkout, new String( dateString + ".json") );
                     // Update max weight
-                    DataHelper.saveExercises(this, userList);
+                    DataHelper.updateExerciseHistory(this, eHistoryList);
+                    // DataHelper.updateExerciseHistory(this, eHistoryList);
+                   // DataHelper.saveExercises(this, userList);
                     startActivity(new Intent(this, MainActivity.class));
                 }
                 break;

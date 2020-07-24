@@ -50,7 +50,7 @@ public class ProgressFragment extends Fragment {
         if(fList != null) {
             for (File f : fList) {
                 // ignore the workout template
-                if(!f.getName().equals("userexercises.json")) {
+                if(!f.getName().equals("userexercises.json") && !f.getName().equals("exerciseHistory.json")) {
                     // get the exercise list associated with workout tied to File f
                     ArrayList<Exercise> eList = DataHelper.loadWorkoutExercises(getContext(), f.getName());
                     x += 10; // increment x for new workout slot

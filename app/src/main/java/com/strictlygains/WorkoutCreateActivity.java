@@ -25,6 +25,7 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
     ArrayList<String> list;
     ArrayList<Exercise> exerciseList, userList;
     ArrayAdapter<String> adapter;
+    boolean match = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,8 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.saveButton) {
-            DataHelper.saveExercises(this, userList);
+            // Save currently selected workout plan in file
+            DataHelper.saveExercises(this, userList);;
             startActivity(new Intent(this, MainActivity.class));
         } else if (v.getId() != R.id.chipGroup){
             Chip c = (Chip) v;
@@ -103,3 +105,22 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
         }
     }
 }
+
+/*
+// May be needed to add custom exercises to history file
+// add missing exercises to a file to keep track of max and goals
+            if (eHistoryList != null) {
+                for (int i = 0; i < userList.size(); i++) {
+                    for (int j = 0; j < eHistoryList.size(); j++) {
+                        if (userList.get(i).getName().equals(eHistoryList.get(j).getName())) {
+                            match = true;
+                            break;
+                        }
+                    }
+                    if (!match) {
+                        eHistoryList.add(userList.get(i));
+                    }
+                    match = false;
+                }
+            }
+ */
