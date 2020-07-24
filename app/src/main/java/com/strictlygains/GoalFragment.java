@@ -138,7 +138,7 @@ public class GoalFragment extends Fragment implements AdapterView.OnItemSelected
                 goalTextView.setText(goalString);
                 maxDouble = eHistoryList.get(i).getMax();
                 goalDouble = eHistoryList.get(i).getGoal();
-                if (maxDouble > goalDouble){
+                if (maxDouble >= goalDouble){
                     progressVal = 100;
                     remainingVal = 0;
                 }

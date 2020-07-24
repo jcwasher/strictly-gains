@@ -78,12 +78,9 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
                     if (eHistoryList.get(i).getName().equals(userList.get(exerciseIndex).getName())){
                         if (!weight.equals("0") && Double.parseDouble(weight) > eHistoryList.get(i).getMax()){
                             eHistoryList.get(i).setMax(Double.parseDouble(weight));
-                            Toast.makeText(this, String.valueOf(eHistoryList.get(i).getMax()), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
-               //     if (!weight.equals("0") && Integer.parseInt(weight) > userList.get(exerciseIndex).getMax()) {
-               //         userList.get(exerciseIndex).setMax(Double.parseDouble(weight));
 
                 break;
             case R.id.setFailed:
@@ -111,8 +108,6 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
                     DataHelper.saveWorkout(this, currentWorkout, new String( dateString + ".json") );
                     // Update max weight
                     DataHelper.updateExerciseHistory(this, eHistoryList);
-                    // DataHelper.updateExerciseHistory(this, eHistoryList);
-                   // DataHelper.saveExercises(this, userList);
                     startActivity(new Intent(this, MainActivity.class));
                 }
                 break;
