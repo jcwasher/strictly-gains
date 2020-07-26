@@ -8,6 +8,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
+ //       FloatingActionButton fab = findViewById(R.id.fab);
 
         // Initialize exerciseHistory file with default workouts
         if (DataHelper.loadExercises(this, "exerciseHistory.json") == null) {
@@ -40,17 +42,18 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
+
+    /*   fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));      // TEMPORARY: used to access login screen.
 
 
-
-              /*  Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show(); */
             }
-        });
+
+        }); */
     }
+
+
 
 }

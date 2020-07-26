@@ -12,6 +12,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="80dp"
         android:text="Registration"
+        android:fontFamily="@font/rancho"
         android:textColor="@android:color/white"
         android:textSize="25dp"
         android:textStyle="bold" />
@@ -27,8 +28,11 @@
 
     <EditText
         android:id="@+id/txtName"
+        android:background="@drawable/input_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="100dp"
         android:ems="10" />
 
@@ -42,8 +46,11 @@
 
     <EditText
         android:id="@+id/txtEmail"
+        android:background="@drawable/input_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="100dp"
         android:ems="10" />
 
@@ -60,7 +67,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
+        android:background="@drawable/input_field"
         android:ems="10"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:inputType="textPassword" />
 
     <Button
@@ -69,7 +79,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Login"
+        android:text="Register"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button"
         android:textColor="@android:color/white" />
 
     <TextView
