@@ -3,6 +3,9 @@ package com.strictlygains;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,12 +39,17 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
         return view;
     }
 
+
     @Override
     public void onClick(View view)
     {
         switch (view.getId()) {
             case R.id.button:
-                openStartWorkoutActivity();
+                if(userList != null) {  // breaks if no workout is selected.
+                    openStartWorkoutActivity();
+                } else {
+                    Toast.makeText(getActivity(), "Please select a workout.", Toast.LENGTH_SHORT ).show();
+                }
                 break;
             case R.id.floatingActionButton:
                 openWorkoutCreateActivity();
