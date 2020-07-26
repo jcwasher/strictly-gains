@@ -19,7 +19,7 @@ class DataHelper {
         String json = "";
 
         try {
-            InputStream is = context.getAssets().open("exercises.json");
+            InputStream is = context.getAssets().open("defaultExercises.json");
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
             is.close();
@@ -63,7 +63,7 @@ class DataHelper {
 
         try {
             JSONObject obj = new JSONObject(json);
-            JSONArray jsonArray = obj.getJSONArray("userexercises");
+            JSONArray jsonArray = obj.getJSONArray("userExercises");
 
             for(int i = 0; i < jsonArray.length(); i++) {
                 JSONObject j = jsonArray.getJSONObject(i);
@@ -79,7 +79,7 @@ class DataHelper {
 
     static void saveExercises(Context context, ArrayList<Exercise> list) {
         try {
-            File file = new File(context.getFilesDir(), "userexercises.json");
+            File file = new File(context.getFilesDir(), "userExercises.json");
             FileWriter writer = new FileWriter(file);
             JSONObject finalOutput = new JSONObject();
             JSONArray jsonArray = new JSONArray();
@@ -101,7 +101,42 @@ class DataHelper {
             }
 
             try {
-                finalOutput.put("userexercises", jsonArray);
+                finalOutput.put("userExercises", jsonArray);
+                writer.write(finalOutput.toString(4));
+                writer.flush();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    static void saveDefaultExercises(Context context, ArrayList<Exercise> list) {
+        try {
+            File file = new File(context.getFilesDir(), "defaultExercises.json");
+            FileWriter writer = new FileWriter(file);
+            JSONObject finalOutput = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+
+            for(int i = 0; i < list.size(); i++) {
+                try {
+                    JSONObject j = new JSONObject();
+                    j.put("id", list.get(i).getID());
+                    j.put("max", list.get(i).getMax());
+                    j.put("goal", list.get(i).getGoal());
+                    j.put("name", list.get(i).getName());
+                    j.put("focus", list.get(i).getFocus());
+                    j.put("setList", new JSONArray() );
+                    jsonArray.put(j);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+
+            try {
+                finalOutput.put("defaultExercises", jsonArray);
                 writer.write(finalOutput.toString(4));
                 writer.flush();
             } catch (JSONException e) {
@@ -222,7 +257,7 @@ class DataHelper {
             }
 
             try {
-                finalOutput.put("userexercises", jsonArray);
+                finalOutput.put("exerciseHistory", jsonArray);
                 writer.write(finalOutput.toString(4));
                 writer.flush();
             } catch (JSONException e) {

@@ -62,7 +62,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        userList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "userexercises.json");
+        userList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "userExercises.json");
 
         if(userList != null) {
             ArrayList<String> list = new ArrayList<>();

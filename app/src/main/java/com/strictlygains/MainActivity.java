@@ -16,7 +16,9 @@ import android.widget.Toast;
 
 import com.strictlygains.ui.main.SectionsPagerAdapter;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
  //       FloatingActionButton fab = findViewById(R.id.fab);
+
+        // copy the defaultExercises to local files if it does not yet exist
+        if(!new File(getFilesDir(), "defaultExercises").exists())
+            DataHelper.saveDefaultExercises(this, Objects.requireNonNull(DataHelper.loadExercises(this)));
 
         // Initialize exerciseHistory file with default workouts
         if (DataHelper.loadExercises(this, "exerciseHistory.json") == null) {

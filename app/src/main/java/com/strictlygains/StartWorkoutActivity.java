@@ -55,7 +55,7 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
         setFailure = findViewById(R.id.setFailed);
         setFailure.setOnClickListener(this);
 
-        userList = DataHelper.loadExercises(this, "userexercises.json");
+        userList = DataHelper.loadExercises(this, "userExercises.json");
         eHistoryList = DataHelper.loadExercises(this, "exerciseHistory.json" );
         currentWorkout = new Workout(1);
         currentWorkout.setExerciseList(userList);
