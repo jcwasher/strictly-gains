@@ -3,7 +3,6 @@ package com.strictlygains;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -14,8 +13,5 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-    }
-
-    public void test(View view) {
     }
 }
