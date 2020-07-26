@@ -12,10 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ public class ProgressFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.progress_layout, container, false);
         LineChart lineChart = view.findViewById(R.id.lineChart);
+
+        lineChart.getXAxis().setEnabled(false); // disabling x axis labels
+        lineChart.getDescription().setEnabled(false); // disabling description
 
         // load the default exercises
         ArrayList<Exercise> defaultExercises = DataHelper.loadExercises(Objects.requireNonNull(getContext()));
@@ -80,6 +85,7 @@ public class ProgressFragment extends Fragment {
         for(Exercise e : defaultExercises) {
             if(exerciseEntries.get(e.getID()-1).size() > 0) {
                 dataSets.set(e.getID()-1, new LineDataSet(exerciseEntries.get(e.getID()-1), e.getName()));
+                dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS[e.getID()-1]);
                 lineSets.add(dataSets.get(e.getID()-1));
             }
         }
