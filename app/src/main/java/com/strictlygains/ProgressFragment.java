@@ -1,92 +1,109 @@
 package com.strictlygains;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.jjoe64.graphview.DefaultLabelFormatter;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.OnDataPointTapListener;
+import com.jjoe64.graphview.series.Series;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class ProgressFragment extends Fragment {
+    private final int MAX_DATA_POINTS = 100000;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.progress_layout, container, false);
-        LineChart lineChart = view.findViewById(R.id.lineChart);
+        GraphView graph = view.findViewById(R.id.graph);
 
-        // load the default exercises
         ArrayList<Exercise> defaultExercises = DataHelper.loadExercises(Objects.requireNonNull(getContext()));
-        // idk
-        ArrayList<ILineDataSet> lineSets = new ArrayList<>();
-        // this will hold all of the exerciseEntries
-        ArrayList<LineDataSet> dataSets = new ArrayList<>();
-        // this will store corresponding entries for each exercise
-        ArrayList<ArrayList<Entry>> exerciseEntries = new ArrayList<>();
+        ArrayList<LineGraphSeries<DataPoint>> seriesList = new ArrayList<>();
 
         // get directory where completed workouts are stored and list the files
         File dir = new File(Objects.requireNonNull(getContext()).getFilesDir().toString());
         File[] fList = dir.listFiles();
 
         assert defaultExercises != null;
-        // each exercise will have its own entries
         for(int i = 0; i < defaultExercises.size(); i++) {
-            exerciseEntries.add(new ArrayList<Entry>());
-            dataSets.add(null);
+            seriesList.add(new LineGraphSeries<DataPoint>());
         }
 
-        float x = 0;
+        boolean[] flag = new boolean[seriesList.size()];
+
+        double x = 0;
         if(fList != null) {
-            Arrays.sort(fList);
-            System.out.println(Arrays.toString(fList));
             for (File f : fList) {
-                System.out.println(Arrays.toString(fList));
                 // ignore the workout template
                 if(!f.getName().equals("userexercises.json") && !f.getName().equals("exerciseHistory.json")) {
                     // get the exercise list associated with workout tied to File f
                     ArrayList<Exercise> eList = DataHelper.loadWorkoutExercises(getContext(), f.getName());
+                    x += 10; // increment x for new workout slot
                     // parse through each exercise
                     if (eList != null) {
                         for(Exercise e : eList) {
-                            float localMax = 0; // base case
+                            double localMax = 0; // base case
                             // parse through each set and update localMax as needed
                             for(Set s : e.getSetList()) {
                                 if(s.getWeight() > localMax)
-                                    localMax = (float)s.getWeight();
+                                    localMax = s.getWeight();
                             }
-                            // access the corresponding entry list and add the new max
-                            exerciseEntries.get(e.getID()-1).add(new Entry(x, localMax));
+                            seriesList.get(e.getID()-1).appendData(new DataPoint(x, localMax), true, MAX_DATA_POINTS);
+                            flag[e.getID()-1] = true;
                         }
                     }
-                    x++;
                 }
             }
         }
-        for(Exercise e : defaultExercises) {
-            if(exerciseEntries.get(e.getID()-1).size() > 0) {
-                dataSets.set(e.getID()-1, new LineDataSet(exerciseEntries.get(e.getID()-1), e.getName()));
-                lineSets.add(dataSets.get(e.getID()-1));
+
+        for(int i = 0; i < flag.length; i++) {
+            if(flag[i]) {
+                graph.addSeries(seriesList.get(i));
             }
         }
 
-        LineData data = new LineData(lineSets);
-        lineChart.setData(data);
-        lineChart.invalidate();
+        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+            @Override
+            public String formatLabel(double value, boolean isValueX) {
+                if (isValueX) {
+                    // show normal x values
+                    return super.formatLabel(value, isValueX);
+                } else {
+                    // show currency for y values
+                    return super.formatLabel(value, isValueX) + " lbs";
+                }
+            }
+        });
+
+        /* series1.setOnDataPointTapListener(new OnDataPointTapListener() {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint) {
+                Toast.makeText(getActivity(), "Upper Body: Day/Weight: "+dataPoint, Toast.LENGTH_SHORT).show();
+            }
+        });
+        series2.setOnDataPointTapListener(new OnDataPointTapListener() {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint) {
+                Toast.makeText(getActivity(), "Lower Body: Day/Weight: "+dataPoint, Toast.LENGTH_SHORT).show();
+            }
+        }); */
 
         return view;
     }
