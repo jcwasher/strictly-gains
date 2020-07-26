@@ -44,13 +44,13 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view)
     {
         switch (view.getId()) {
-            case R.id.button:
-                if(userList != null) {  // breaks if no workout is selected.
-                    openStartWorkoutActivity();
-                } else {
+            case R.id.button: {
+                if (userList == null || userList.size() == 0)
                     Toast.makeText(getActivity(), "Please select a workout.", Toast.LENGTH_SHORT ).show();
-                }
+                else
+                    openStartWorkoutActivity();
                 break;
+            }
             case R.id.floatingActionButton:
                 openWorkoutCreateActivity();
                 break;
