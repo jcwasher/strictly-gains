@@ -85,7 +85,8 @@ public class ProgressFragment extends Fragment {
         for(Exercise e : defaultExercises) {
             if(exerciseEntries.get(e.getID()-1).size() > 0) {
                 dataSets.set(e.getID()-1, new LineDataSet(exerciseEntries.get(e.getID()-1), e.getName()));
-                dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS[e.getID()-1]);
+                dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS);
+                // dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS[e.getID()-1]);
                 lineSets.add(dataSets.get(e.getID()-1));
             }
         }

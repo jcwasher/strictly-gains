@@ -257,7 +257,8 @@ class DataHelper {
             }
 
             try {
-                finalOutput.put("exerciseHistory", jsonArray);
+                // name has to be "userExercises" to work with loadExercises function
+                finalOutput.put("userExercises", jsonArray);
                 writer.write(finalOutput.toString(4));
                 writer.flush();
             } catch (JSONException e) {
