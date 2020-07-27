@@ -157,17 +157,5 @@ public class GoalFragment extends Fragment implements AdapterView.OnItemSelected
             }
         }
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.login_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
 }
 

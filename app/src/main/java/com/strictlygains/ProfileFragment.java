@@ -18,15 +18,4 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.profile_layout, container, false);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        super.onCreate(savedInstanceState);
-    }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.login_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
 }

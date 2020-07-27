@@ -10,9 +10,10 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.widget.Toast;
+import android.view.MenuItem;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.strictlygains.ui.main.SectionsPagerAdapter;
 
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     /*   fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +66,24 @@ public class MainActivity extends AppCompatActivity {
         }); */
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.login_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id) {
+            case R.id.login:
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }

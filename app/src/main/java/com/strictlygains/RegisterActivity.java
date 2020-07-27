@@ -2,8 +2,11 @@ package com.strictlygains;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.strictlygains.ui.login.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -14,8 +17,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
     }
 
-    public void test(View view) {
+    public void redirectToLogin(View view) {
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
     }
 }

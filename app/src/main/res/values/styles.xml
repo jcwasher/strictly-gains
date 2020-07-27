@@ -17,4 +17,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- Custom -->
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:fontFamily">@font/rancho</item>
+        <item name="android:textSize">35sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>
