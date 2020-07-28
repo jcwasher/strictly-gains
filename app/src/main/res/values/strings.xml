@@ -15,4 +15,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="user_name">Jane Doe</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>

@@ -22,6 +22,7 @@
         <item name="android:fontFamily">@font/rancho</item>
         <item name="android:textSize">35sp</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAlignment">gravity</item>
     </style>
 
 </resources>
