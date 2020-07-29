@@ -22,7 +22,7 @@ import com.strictlygains.ui.login.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText mFullName, mEmail, mPassword;
+    EditText mFullName, mEmail, mPassword, mConfirmPassword;
     Button mRegisterBtn;
     ProgressBar progressBar;
 
@@ -36,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         mFullName = findViewById(R.id.full_name);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
+        mConfirmPassword = findViewById(R.id.confirm_password);
         mRegisterBtn = findViewById(R.id.btnRegister);
         progressBar = findViewById(R.id.register_progressbar);
 
@@ -47,20 +48,31 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
+                String confirmPassword = mConfirmPassword.getText().toString().trim();
                 final String username = mFullName.getText().toString().trim();
 
+                if(TextUtils.isEmpty(username)) {
+                    mFullName.setError("Name is required.");
+                    return;
+                }
+
                 if(TextUtils.isEmpty(email)) {
-                    mEmail.setError("Email is Required.");
+                    mEmail.setError("Email is required.");
                     return;
                 }
 
                 if(TextUtils.isEmpty(password)) {
-                    mPassword.setError("Password is Required.");
+                    mPassword.setError("Password is required.");
                     return;
                 }
 
                 if(password.length() < 5) {
                     mPassword.setError("Password must be greater than 5 characters.");
+                    return;
+                }
+
+                if(!confirmPassword.equals(password)) {
+                    mConfirmPassword.setError("Password must match.");
                     return;
                 }
 
