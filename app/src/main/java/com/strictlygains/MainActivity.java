@@ -16,11 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -63,13 +59,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         fAuth = FirebaseAuth.getInstance();
+
         /*
-        // menu drawer (login/logout options)
+        menu drawer (login/logout options)
         Menu menuNav = navigationView.getMenu();
 
         MenuItem loginItem = menuNav.findItem(R.id.nav_login);
         MenuItem logoutItem = menuNav.findItem(R.id.nav_logout);
-*/
+        */
 
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -96,8 +93,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -113,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return false;
     }
+
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
