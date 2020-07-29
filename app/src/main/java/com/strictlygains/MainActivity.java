@@ -1,7 +1,7 @@
 package com.strictlygains;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
+
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,14 +17,14 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.strictlygains.ui.login.LoginActivity;
 import com.strictlygains.ui.main.SectionsPagerAdapter;
 
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle toggle;
     TabLayout tabs;
 
+    FirebaseAuth fAuth;
+
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +62,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        fAuth = FirebaseAuth.getInstance();
+        /*
+        // menu drawer (login/logout options)
+        Menu menuNav = navigationView.getMenu();
+
+        MenuItem loginItem = menuNav.findItem(R.id.nav_login);
+        MenuItem logoutItem = menuNav.findItem(R.id.nav_logout);
+*/
+
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
+
+            Menu menuNav = navigationView.getMenu();
+
+            MenuItem loginItem = menuNav.findItem(R.id.nav_login);
+            MenuItem logoutItem = menuNav.findItem(R.id.nav_logout);
+
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
+                if(fAuth.getCurrentUser() != null) {
+                    logoutItem.setVisible(true);
+                    loginItem.setVisible(false);
+                } else {
+                    loginItem.setVisible(true);
+                    logoutItem.setVisible(false);
+                }
+            }
+        };
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-
 
         // invert
         ViewCompat.setLayoutDirection(tabs, ViewCompat.LAYOUT_DIRECTION_LTR);
@@ -84,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -92,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(id) {
             case R.id.nav_login:
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                break;
+            case R.id.nav_logout:
+                fAuth.signOut();
                 break;
         }
 

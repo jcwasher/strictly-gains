@@ -16,25 +16,27 @@
             android:id="@+id/profile_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_profile"
             android:layout_centerVertical="true"/>
+
 
         <TextView
             android:id="@+id/full_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user_name"
-            android:textSize="30sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/profile_image"
             android:fontFamily="@font/rancho"
             android:includeFontPadding="false"
-            android:layout_toRightOf="@+id/profile_image"
-            android:layout_centerVertical="true"
+            android:text="@string/user_name"
             android:textColor="@android:color/white"
-            android:layout_marginLeft="10dp"/>
+            android:textSize="40sp" />
 
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/profile_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -51,9 +53,11 @@
                 android:layout_marginBottom="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Female"/>
+                    android:inputType="none"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +70,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="22" />
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,7 +83,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5'9"/>
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +96,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="150 pounds"/>
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,7 +109,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="160 pounds"/>
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +122,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="200 pounds"/>
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,7 +135,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="140 pounds"/>
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 

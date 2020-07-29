@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.strictlygains.data.LoginRepository;
 import com.strictlygains.data.Result;
 import com.strictlygains.data.model.LoggedInUser;

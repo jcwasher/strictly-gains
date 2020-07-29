@@ -1,5 +1,13 @@
 package com.strictlygains.data;
 
+import android.os.Handler;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.strictlygains.data.model.LoggedInUser;
 
 import java.io.IOException;
@@ -9,15 +17,19 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
+    FirebaseAuth fAuth;
+
     public Result<LoggedInUser> login(String username, String password) {
 
         try {
             // TODO: handle loggedInUser authentication
-            LoggedInUser fakeUser =
-                    new LoggedInUser(
-                            java.util.UUID.randomUUID().toString(),
-                            "Jane Doe");
-            return new Result.Success<>(fakeUser);
+            fAuth = FirebaseAuth.getInstance();
+
+            LoggedInUser user =
+                    new LoggedInUser( fAuth.getCurrentUser().getUid()
+                                ,
+                            fAuth.getCurrentUser().getDisplayName());
+            return new Result.Success<>(user);
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
         }
@@ -26,4 +38,5 @@ public class LoginDataSource {
     public void logout() {
         // TODO: revoke authentication
     }
+
 }
