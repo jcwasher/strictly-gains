@@ -88,10 +88,14 @@ public class RegisterActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(username).build();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-                            user.updateProfile(profileUpdates);
+                            finish();
+                            if (user != null) {
+                                user.updateProfile(profileUpdates);
+                            }
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            if(task.getException() != null) {
+                                Toast.makeText(RegisterActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                             progressBar.setVisibility(View.INVISIBLE);
                         }
                     }

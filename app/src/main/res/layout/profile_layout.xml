@@ -23,6 +23,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:contentDescription="@string/profile_picture"
                 android:background="@drawable/ic_sg_logo" />
         </androidx.cardview.widget.CardView>
 
@@ -31,14 +32,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:layout_toRightOf="@+id/profile_image"
+            android:layout_toEndOf="@+id/profile_image"
             android:fontFamily="@font/rancho"
             android:includeFontPadding="false"
             android:text="@string/user_name"
             android:textColor="@android:color/white"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
     </RelativeLayout>
 
@@ -57,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Gender">
+                android:hint="@string/gender">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/profile_gender"
@@ -71,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Age">
+                android:hint="@string/age">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/age"
@@ -84,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Height">
+                android:hint="@string/height">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -96,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Weight">
+                android:hint="@string/weight">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="104dp"
@@ -108,7 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Bench Max">
+                android:hint="@string/bench_max">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -120,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Squat Max">
+                android:hint="@string/squat_max">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -132,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Deadlift Max">
+                android:hint="@string/deadlift_max">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
