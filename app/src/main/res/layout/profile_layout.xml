@@ -9,8 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/colorAccent"
+        android:layout_height="130dp"
         >
 
 
@@ -42,7 +41,7 @@
         android:fontFamily="@font/rancho"
         android:includeFontPadding="false"
         android:text="@string/user_name"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorPrimary"
         android:textSize="35sp" />
 
         <TextView
@@ -62,7 +61,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="-60dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
