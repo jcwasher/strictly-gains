@@ -72,25 +72,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 */
 
 
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
 
-            Menu menuNav = navigationView.getMenu();
-
-            MenuItem loginItem = menuNav.findItem(R.id.nav_login);
-            MenuItem logoutItem = menuNav.findItem(R.id.nav_logout);
-
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-
-                if(fAuth.getCurrentUser() != null) {
-                    logoutItem.setVisible(true);
-                    loginItem.setVisible(false);
-                } else {
-                    loginItem.setVisible(true);
-                    logoutItem.setVisible(false);
-                }
-            }
-        };
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -121,11 +104,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
 
         switch(id) {
-            case R.id.nav_login:
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                break;
             case R.id.nav_logout:
                 fAuth.signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
                 break;
         }
 

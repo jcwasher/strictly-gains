@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.strictlygains.ui.login.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -25,7 +27,6 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
     FirebaseAuth fAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +42,12 @@ public class RegisterActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
 
-
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = mEmail.getText().toString().trim();
+                final String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
+                final String username = mFullName.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is Required.");
@@ -58,8 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(password.length() < 6) {
-                    mPassword.setError("Password must be greater than 6 characters.");
+                if(password.length() < 5) {
+                    mPassword.setError("Password must be greater than 5 characters.");
                     return;
                 }
 
@@ -71,10 +72,14 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Welcome! " + username, Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(username).build();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                            user.updateProfile(profileUpdates);
                         } else {
-                            Toast.makeText(RegisterActivity.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
                         }
                     }

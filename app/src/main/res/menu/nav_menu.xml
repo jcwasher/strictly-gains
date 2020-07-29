@@ -6,20 +6,13 @@
         android:id="@+id/nav_dashboard"
         android:title="Dashboard" />
     <item
-        android:id="@+id/nav_login"
-        android:title="Login"
-        android:visible="false"
-        />
-    <item
-        android:id="@+id/nav_logout"
-        android:title="Logout"
-        android:visible="false"
-        />
-    <item
         android:id="@+id/nav_settings"
         android:title="Settings" />
     <item
         android:id="@+id/nav_notifications"
         android:title="Notifications" />
-
+    <item
+        android:id="@+id/nav_logout"
+        android:title="Logout"
+        />
 </menu>

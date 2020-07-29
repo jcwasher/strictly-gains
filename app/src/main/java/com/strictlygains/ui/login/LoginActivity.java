@@ -14,6 +14,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -43,9 +44,16 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        fAuth = FirebaseAuth.getInstance();
+
+        if(fAuth.getCurrentUser() != null) {
+            getSupportActionBar().show();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        } else {
+            getSupportActionBar().hide();
+        }
 
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
@@ -56,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         final TextView tvRegister = findViewById(R.id.tvRegister);
 
-        fAuth = FirebaseAuth.getInstance();
+
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -89,8 +97,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
-                //Complete and destroy login activity once successful
-                finish();
+                if(fAuth.getCurrentUser() != null) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    //Complete and destroy login activity once successful
+                    finish();
+                }
             }
         });
 
@@ -137,6 +148,17 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(TextUtils.isEmpty(usernameEditText.getText().toString().trim())) {
+                    usernameEditText.setError("Email is Required.");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(passwordEditText.getText().toString().trim())) {
+                    passwordEditText.setError("Password is Required.");
+                    return;
+                }
+
+
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 fAuth.signInWithEmailAndPassword(usernameEditText.getText().toString().trim(), passwordEditText.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
