@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,12 +31,17 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_layout, container, false);
+
         TextView profileName = view.findViewById(R.id.profile_fullname);
+
         TextInputEditText gender = view.findViewById(R.id.profile_gender);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        profileName.setText(user.getDisplayName());
 
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            profileName.setText(user.getDisplayName());
+        }
 
 
         gender.setOnClickListener(new View.OnClickListener() {

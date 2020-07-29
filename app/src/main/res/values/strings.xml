@@ -21,8 +21,10 @@
     <string name="age">Age</string>
     <string name="height">Height</string>
     <string name="weight">Weight</string>
-    <string name="bench_max">Bench Max</string>
-    <string name="squat_max">Squat Max</string>
-    <string name="deadlift_max">Deadlift Max</string>
+    <string name="bench_max">Bench</string>
+    <string name="squat_max">Squat</string>
+    <string name="deadlift_max">Deadlift</string>
     <string name="profile_picture">profile picture</string>
+    <string name="date_joined">"Joined: "</string>
+    <string name="zero">0</string>
 </resources>
