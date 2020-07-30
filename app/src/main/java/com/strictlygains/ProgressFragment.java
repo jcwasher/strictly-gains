@@ -95,10 +95,15 @@ public class ProgressFragment extends Fragment {
                 }
             }
         }
+        int color = 0;
         for(Exercise e : defaultExercises) {
             if(exerciseEntries.get(e.getID()-1).size() > 0) {
                 dataSets.set(e.getID()-1, new LineDataSet(exerciseEntries.get(e.getID()-1), e.getName()));
-                dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS[e.getID()-1]);
+                // Only 5 pastel colors so need color variable to stay inside array bounds
+                dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS[color]);
+                ++color;
+                if (color == 5)
+                    color = 0;
                 lineSets.add(dataSets.get(e.getID()-1));
             }
         }
