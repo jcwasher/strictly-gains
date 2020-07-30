@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/workoutList"
+        android:id="@+id/exerciseList"
         android:layout_width="match_parent"
         android:layout_height="242dp"
         android:layout_marginStart="32dp"
@@ -43,7 +43,7 @@
         android:paddingRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workoutList"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseList"
         app:singleSelection="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

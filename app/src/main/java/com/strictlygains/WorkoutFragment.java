@@ -3,9 +3,6 @@ package com.strictlygains;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,16 +13,11 @@ import androidx.fragment.app.Fragment;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 public class WorkoutFragment extends Fragment implements View.OnClickListener{
@@ -36,9 +28,9 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStte) {
         View view = inflater.inflate(R.layout.workout_layout, container, false);
-        Button startButton = view.findViewById(R.id.button);
+        Button startButton = view.findViewById(R.id.beginButton);
         startButton.setOnClickListener(this);
-        FloatingActionButton actionButton = view.findViewById(R.id.floatingActionButton);
+        FloatingActionButton actionButton = view.findViewById(R.id.createButton);
         actionButton.setOnClickListener(this);
 
         wList = view.findViewById(R.id.exerciseList);
@@ -49,14 +41,10 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view)
     {
         switch (view.getId()) {
-            case R.id.button: {
-                if (userList == null || userList.size() == 0)
-                    Toast.makeText(getActivity(), "Please select a workout.", Toast.LENGTH_SHORT ).show();
-                else
-                    openStartWorkoutActivity();
-                break;
+            case R.id.beginButton: {
+                // changing
             }
-            case R.id.floatingActionButton:
+            case R.id.createButton:
                 openWorkoutCreateActivity();
                 break;
             default:

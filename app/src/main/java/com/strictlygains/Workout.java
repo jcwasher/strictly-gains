@@ -3,6 +3,7 @@ package com.strictlygains;
 import java.util.ArrayList;
 
 public class Workout {
+    private String name;
     private int id;
     private ArrayList<Exercise> exerciseList;
 
@@ -11,6 +12,19 @@ public class Workout {
     public Workout(int i) {
         id = i;
         exerciseList = new ArrayList<>();
+    }
+
+    public Workout(int i, String n) {
+        this(i);
+        name = n;
+    }
+
+    public void setName(String n) {
+        name = n;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setID(int i) {

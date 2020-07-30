@@ -2,6 +2,7 @@ package com.strictlygains;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,8 +18,9 @@ import java.util.Collections;
 import java.util.Objects;
 
 public class WorkoutCreateActivity extends AppCompatActivity implements View.OnClickListener{
+    Dialog myDialog;
     SearchView search;
-    ListView wList;
+    ListView eList;
     FloatingActionButton saveButton;
     ChipGroup chipGroup;
     Chip chip;
@@ -32,8 +34,9 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_create);
 
+        myDialog = new Dialog(this);
         search = findViewById(R.id.searchView);
-        wList = findViewById(R.id.workoutList);
+        eList = findViewById(R.id.exerciseList);
         chipGroup = findViewById(R.id.chipGroup);
         chipGroup.setOnClickListener(this);
         saveButton = findViewById(R.id.saveButton);
@@ -41,7 +44,7 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
 
         list = new ArrayList<String>();
         exerciseList = new ArrayList<Exercise>();
-        userList = new ArrayList<Exercise>();
+        Workout newWorkout = new Workout();
 
         // using new DataHelper class to load
         exerciseList = DataHelper.loadExercises(this);
@@ -54,19 +57,26 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
         Collections.sort(list);
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        wList.setAdapter(adapter);
-        wList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        eList.setAdapter(adapter);
+        eList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(WorkoutCreateActivity.this, adapter.getItem(position) + " Added", Toast.LENGTH_SHORT).show();
                 for(int i = 0; i < exerciseList.size(); i++) {
                     if(Objects.equals(adapter.getItem(position), exerciseList.get(i).getName())) {
+                        Exercise chosen = exerciseList.get(i);
+                        showPopUp(view);
+
+
+
+                        /*
                         userList.add(exerciseList.get(i));
                         chipGroup = findViewById(R.id.chipGroup);
                         chip = (Chip) getLayoutInflater().inflate(R.layout.chip_layout, chipGroup, false);
                         chip.setText(adapter.getItem(position));
                         chipGroup.addView(chip);
                         break;
+                        */
                     }
                 }
             }
@@ -104,7 +114,13 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
             //Toast.makeText(WorkoutCreateActivity.this,  c.getText()+ " Removed", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void showPopUp(View v) {
+        myDialog.setContentView(R.layout.exercise_popup);
+        myDialog.show();
+    }
 }
+
 
 /*
 // May be needed to add custom exercises to history file

@@ -230,8 +230,6 @@ class DataHelper {
         return exercises;
     }
 
-
-
     // Used to store max and goals
     static void updateExerciseHistory(Context context, ArrayList<Exercise> list) {
         try {
