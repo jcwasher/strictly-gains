@@ -29,6 +29,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class GoalFragment extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -73,6 +74,8 @@ public class GoalFragment extends Fragment implements AdapterView.OnItemSelected
             for (int i=0; i<eHistoryList.size(); i++)
                 list.add(eHistoryList.get(i).getName());
         }
+        // sort alphabetically
+        Collections.sort(list);
 
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
@@ -100,6 +103,7 @@ public class GoalFragment extends Fragment implements AdapterView.OnItemSelected
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+        // Runs when edit goal button is clicked
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE TEXT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -109,6 +113,7 @@ public class GoalFragment extends Fragment implements AdapterView.OnItemSelected
                         eHistoryList.get(i).setGoal(Double.parseDouble(goalTextView.getText().toString()));
                         DataHelper.updateExerciseHistory(getContext(), eHistoryList);
                         eHistoryList = DataHelper.loadExercises(getContext(), "exerciseHistory.json");
+                        // updates pieChart and other data for selected exercise with new goal
                         updateAdapterItem(position);
                     }
                 }
@@ -123,6 +128,7 @@ public class GoalFragment extends Fragment implements AdapterView.OnItemSelected
             }
         });
 
+        // runs when item in drop-down list is selected
         updateAdapterItem(position);
     }
 

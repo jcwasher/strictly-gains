@@ -2,13 +2,18 @@ package com.strictlygains;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,32 +24,43 @@ import java.util.Objects;
 public class WorkoutCreateActivity extends AppCompatActivity implements View.OnClickListener{
     SearchView search;
     ListView wList;
-    FloatingActionButton saveButton;
+    FloatingActionButton saveButton, createButton;
     ChipGroup chipGroup;
     Chip chip;
     ArrayList<String> list;
     ArrayList<Exercise> exerciseList, userList;
     ArrayAdapter<String> adapter;
-    boolean match = false;
+    boolean exists;
+    EditText editText;
+    AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_create);
 
+        exists = false;
         search = findViewById(R.id.searchView);
         wList = findViewById(R.id.workoutList);
         chipGroup = findViewById(R.id.chipGroup);
         chipGroup.setOnClickListener(this);
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
+        createButton = findViewById(R.id.createButton);
+        createButton.setOnClickListener(this);
+        editText = new EditText(this);
+        dialog = new AlertDialog.Builder(this).create();
+
+        dialog.setTitle("Exercise Name");
+        dialog.setView(editText);
+
 
         list = new ArrayList<String>();
         exerciseList = new ArrayList<Exercise>();
         userList = new ArrayList<Exercise>();
 
         // using new DataHelper class to load
-        exerciseList = DataHelper.loadExercises(this);
+        exerciseList = DataHelper.loadExercises(this, "exerciseHistory.json");
 
         assert exerciseList != null;
         for(int i = 0; i < exerciseList.size(); i++)
@@ -72,6 +88,49 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
             }
         });
 
+        wList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(WorkoutCreateActivity.this)
+                        .setIcon(android.R.drawable.ic_menu_delete)
+                        .setTitle("Delete " + adapter.getItem(position) + "?")
+                        .setMessage("Are you sure you want to delete this exercise?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                for (int i=0; i<exerciseList.size(); i++){
+                                    if (adapter.getItem(position).equals(exerciseList.get(i).getName())){
+                                        exerciseList.remove(i);
+                                    }
+                                    if (DataHelper.loadExercises(WorkoutCreateActivity.this, "userExercises.json") != null) {
+                                        ArrayList<Exercise> e = DataHelper.loadExercises(WorkoutCreateActivity.this, "userExercises.json");
+                                        if (i < e.size() && adapter.getItem(position).equals(e.get(i).getName())) {
+                                            e.remove(i);
+                                            DataHelper.saveExercises(WorkoutCreateActivity.this, e);
+                                        }
+                                    }
+
+                                }
+                                // update IDs
+                                for (int i=0; i<exerciseList.size(); i++)
+                                    exerciseList.get(i).setID(i+1);
+                                DataHelper.updateExerciseHistory(WorkoutCreateActivity.this, exerciseList);
+                                // Update list for deleted item
+                                list.clear();
+                                for(int i = 0; i < exerciseList.size(); i++)
+                                    list.add( exerciseList.get(i).getName() );
+                                Collections.sort(list);
+                                adapter.notifyDataSetChanged();
+
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+
+                return true;
+            }
+        });
+
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit (String s) {
@@ -84,6 +143,32 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
                 return false;
             }
         });
+
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE EXERCISE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for(int i = 0; i < exerciseList.size(); i++){
+                    // Checks to see if exercise already exists
+                    if(editText.getText().toString().equals(exerciseList.get(i).getName())){
+                        Toast.makeText(WorkoutCreateActivity.this,"Exercise already exists", Toast.LENGTH_SHORT).show();
+                        exists = true;
+                    }
+                }
+                // if exercise doesn't already exist, add it to exercise history file
+                if (!exists) {
+                    // Set ID 1 larger than size
+                    int id = exerciseList.size() + 1;
+                    // Add exercise. Focus not currently being used so set to default.
+                    exerciseList.add(new Exercise(id, 0, 100, editText.getText().toString(), "default"));
+                    DataHelper.updateExerciseHistory(WorkoutCreateActivity.this, exerciseList);
+                    list.add(editText.getText().toString());
+                    Collections.sort(list);
+                    adapter.notifyDataSetChanged();
+                }
+                exists = false;
+
+            }
+        });
     }
 
     @Override
@@ -92,7 +177,7 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
             // Save currently selected workout plan in file
             DataHelper.saveExercises(this, userList);;
             startActivity(new Intent(this, MainActivity.class));
-        } else if (v.getId() != R.id.chipGroup){
+        } else if (v.getId() != R.id.chipGroup && v.getId() != R.id.createButton){
             Chip c = (Chip) v;
             for (int i = 0; i < userList.size(); i++) {
                 if (Objects.equals(c.getText(), userList.get(i).getName())) {
@@ -102,25 +187,12 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
             }
             chipGroup.removeView(v);   // Removes chip when clicked
             //Toast.makeText(WorkoutCreateActivity.this,  c.getText()+ " Removed", Toast.LENGTH_SHORT).show();
+        } else if (v.getId() == R.id.createButton){
+            dialog.show();
+
         }
     }
+
 }
 
-/*
-// May be needed to add custom exercises to history file
-// add missing exercises to a file to keep track of max and goals
-            if (eHistoryList != null) {
-                for (int i = 0; i < userList.size(); i++) {
-                    for (int j = 0; j < eHistoryList.size(); j++) {
-                        if (userList.get(i).getName().equals(eHistoryList.get(j).getName())) {
-                            match = true;
-                            break;
-                        }
-                    }
-                    if (!match) {
-                        eHistoryList.add(userList.get(i));
-                    }
-                    match = false;
-                }
-            }
- */
+

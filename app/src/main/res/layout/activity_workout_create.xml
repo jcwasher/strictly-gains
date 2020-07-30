@@ -6,6 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".WorkoutCreateActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/createButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="#00FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:clickable="true"
+        app:backgroundTint="#FFFFFF"
+        app:fabCustomSize="30dp"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="@+id/workoutList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.803"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:focusable="true" />
+
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
@@ -17,7 +35,9 @@
         android:queryHint="Search Here"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </SearchView>
 
     <ListView
         android:id="@+id/workoutList"

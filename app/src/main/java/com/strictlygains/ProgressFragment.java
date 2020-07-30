@@ -36,7 +36,7 @@ public class ProgressFragment extends Fragment {
         lineChart.getDescription().setEnabled(false); // disabling description
 
         // load the default exercises
-        ArrayList<Exercise> defaultExercises = DataHelper.loadExercises(Objects.requireNonNull(getContext()));
+        ArrayList<Exercise> defaultExercises = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "exerciseHistory.json");
         // idk
         ArrayList<ILineDataSet> lineSets = new ArrayList<>();
         // this will hold all of the exerciseEntries
@@ -56,6 +56,7 @@ public class ProgressFragment extends Fragment {
         }
 
         float x = 0;
+        boolean match = false;
         if(fList != null) {
             Arrays.sort(fList);
             System.out.println(Arrays.toString(fList));
@@ -69,6 +70,18 @@ public class ProgressFragment extends Fragment {
                     if (eList != null) {
                         for(Exercise e : eList) {
                             float localMax = 0; // base case
+                            // loop used to get correct ID since IDs change when an exercise is deleted
+                            for (int i=0; i<defaultExercises.size(); i++){
+                                if (e.getName().equals(defaultExercises.get(i).getName())){
+                                    e.setID(i+1);
+                                    match = true;
+                                    break;
+                                }
+                            }
+                            if (!match)
+                                continue;
+                            match = false;
+
                             // parse through each set and update localMax as needed
                             for(Set s : e.getSetList()) {
                                 if(s.getWeight() > localMax)
@@ -85,8 +98,7 @@ public class ProgressFragment extends Fragment {
         for(Exercise e : defaultExercises) {
             if(exerciseEntries.get(e.getID()-1).size() > 0) {
                 dataSets.set(e.getID()-1, new LineDataSet(exerciseEntries.get(e.getID()-1), e.getName()));
-                dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS);
-                // dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS[e.getID()-1]);
+                dataSets.get(e.getID()-1).setColors(ColorTemplate.PASTEL_COLORS[e.getID()-1]);
                 lineSets.add(dataSets.get(e.getID()-1));
             }
         }
@@ -94,6 +106,8 @@ public class ProgressFragment extends Fragment {
         LineData data = new LineData(lineSets);
         lineChart.setData(data);
         lineChart.invalidate();
+
+        DataHelper.updateExerciseHistory(getContext(), defaultExercises);
 
         return view;
     }
