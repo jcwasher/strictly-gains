@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -107,7 +108,10 @@ public class GoalFragment extends Fragment implements AdapterView.OnItemSelected
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE TEXT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                goalTextView.setText(editText.getText());
+                if (TextUtils.isDigitsOnly(editText.getText()))
+                    goalTextView.setText(editText.getText());
+                else
+                    Toast.makeText(getContext(), "Input number only", Toast.LENGTH_SHORT).show();
                 for(int i = 0; i < eHistoryList.size(); i++){
                     if(Objects.equals(adapter.getItem(position), eHistoryList.get(i).getName())){
                         eHistoryList.get(i).setGoal(Double.parseDouble(goalTextView.getText().toString()));
