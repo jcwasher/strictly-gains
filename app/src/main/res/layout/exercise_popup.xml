@@ -156,6 +156,8 @@
         android:paddingHorizontal="10dp"
         android:text="Add Exercise"
         android:textColor="#000000"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

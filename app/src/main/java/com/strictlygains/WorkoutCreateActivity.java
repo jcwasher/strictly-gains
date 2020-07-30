@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import com.google.android.material.chip.Chip;
@@ -33,7 +34,6 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_create);
-
         myDialog = new Dialog(this);
         search = findViewById(R.id.searchView);
         eList = findViewById(R.id.exerciseList);
@@ -118,6 +118,8 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
     public void showPopUp(View v) {
         myDialog.setContentView(R.layout.exercise_popup);
         myDialog.show();
+        Button addExerciseButton = findViewById(R.id.addExerciseButton);
+        System.out.println(addExerciseButton);
     }
 }
 
