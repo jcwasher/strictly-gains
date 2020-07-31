@@ -7,95 +7,109 @@
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <TextView
-        android:id="@+id/tvCW"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Current Workout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Date:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.58" />
-
     <Button
-        android:id="@+id/button"
-        android:background="@drawable/button"
+        android:id="@+id/beginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:onClick="onClick"
+        android:background="@drawable/button"
         android:backgroundTint="@color/colorAccent"
+        android:onClick="onClick"
         android:text="Begin"
         android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/button"
-        android:backgroundTint="@color/colorAccent"
-        android:onClick="onClick"
-        android:text="Stats"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/workoutList" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/createButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="275dp"
         android:backgroundTint="#FFFFFF"
         android:clickable="true"
         android:onClick="onClick"
         app:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.704"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.493"
         app:rippleColor="#FFFFFF"
         app:srcCompat="@android:drawable/ic_input_add" />
 
+    <ListView
+        android:id="@+id/workoutList"
+        android:layout_width="401dp"
+        android:layout_height="223dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.072">
+
+    </ListView>
+
     <TextView
-        android:id="@+id/editText"
-        android:layout_width="146dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/editTV"
+        android:layout_width="74dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:text="Create Workout"
+        android:text="Edit"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/createTV"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editButton" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFFFF"
+        android:clickable="true"
+        android:onClick="onClick"
+        app:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.493"
+        app:rippleColor="#FFFFFF"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <TextView
+        android:id="@+id/createTV"
+        android:layout_width="74dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:text="Create"
         android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.715"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton" />
+        app:layout_constraintTop_toBottomOf="@+id/createButton" />
 
-    <ListView
-        android:id="@+id/exerciseList"
-        android:layout_width="409dp"
-        android:layout_height="213dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+    <Button
+        android:id="@+id/statsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:backgroundTint="@color/colorAccent"
+        android:clickable="false"
+        android:text="Stats"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCW" />
-
+        app:layout_constraintTop_toBottomOf="@+id/beginButton"
+        app:layout_constraintVertical_bias="0.3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

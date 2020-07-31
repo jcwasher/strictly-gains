@@ -6,11 +6,13 @@ public class Workout {
     private int id;
     private ArrayList<Exercise> exerciseList;
 
-    public Workout() { }
+    public Workout() {
+        exerciseList = new ArrayList<>();
+    }
 
     public Workout(int i) {
+        this();
         id = i;
-        exerciseList = new ArrayList<>();
     }
 
     public void setID(int i) {

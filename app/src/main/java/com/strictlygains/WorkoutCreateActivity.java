@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
@@ -22,17 +24,23 @@ import java.util.Collections;
 import java.util.Objects;
 
 public class WorkoutCreateActivity extends AppCompatActivity implements View.OnClickListener{
-    SearchView search;
-    ListView wList;
-    FloatingActionButton saveButton, createButton;
-    ChipGroup chipGroup;
-    Chip chip;
-    ArrayList<String> list;
-    ArrayList<Exercise> exerciseList, userList;
-    ArrayAdapter<String> adapter;
-    boolean exists;
-    EditText editText;
-    AlertDialog dialog;
+    private SearchView search;
+    private ListView wList;
+    private FloatingActionButton saveButton, createButton;
+    private ChipGroup chipGroup;
+    private Chip chip;
+    private ArrayList<String> list;
+    private ArrayList<Exercise> exerciseList, userList;
+    private ArrayAdapter<String> adapter;
+    private Workout newWorkout;
+    private Exercise choice;
+    private boolean exists;
+    private EditText editText, repET, rpeET, weightET;
+    private TextView setNumberTV, closeTV, exerciseName;
+    private Button addSetButton, removeSetButton, addExerciseButton;
+    private AlertDialog dialog, dialog2;
+    private AlertDialog.Builder dialog2Builder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +62,10 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
         dialog.setTitle("Exercise Name");
         dialog.setView(editText);
 
-
         list = new ArrayList<String>();
         exerciseList = new ArrayList<Exercise>();
         userList = new ArrayList<Exercise>();
+        newWorkout = new Workout();
 
         // using new DataHelper class to load
         exerciseList = DataHelper.loadExercises(this, "exerciseHistory.json");
@@ -77,11 +85,8 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
                 //Toast.makeText(WorkoutCreateActivity.this, adapter.getItem(position) + " Added", Toast.LENGTH_SHORT).show();
                 for(int i = 0; i < exerciseList.size(); i++) {
                     if(Objects.equals(adapter.getItem(position), exerciseList.get(i).getName())) {
-                        userList.add(exerciseList.get(i));
-                        chipGroup = findViewById(R.id.chipGroup);
-                        chip = (Chip) getLayoutInflater().inflate(R.layout.chip_layout, chipGroup, false);
-                        chip.setText(adapter.getItem(position));
-                        chipGroup.addView(chip);
+                        choice = exerciseList.get(i);
+                        addExercisetoWorkout();
                         break;
                     }
                 }
@@ -101,12 +106,14 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
                                 for (int i=0; i<exerciseList.size(); i++){
                                     if (adapter.getItem(position).equals(exerciseList.get(i).getName())){
                                         exerciseList.remove(i);
+                                        break;
                                     }
                                     if (DataHelper.loadExercises(WorkoutCreateActivity.this, "userExercises.json") != null) {
                                         ArrayList<Exercise> e = DataHelper.loadExercises(WorkoutCreateActivity.this, "userExercises.json");
                                         if (i < e.size() && adapter.getItem(position).equals(e.get(i).getName())) {
                                             e.remove(i);
                                             DataHelper.saveExercises(WorkoutCreateActivity.this, e);
+                                            break;
                                         }
                                     }
 
@@ -167,6 +174,52 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
                 }
                 exists = false;
 
+            }
+        });
+    }
+
+    public void addExercisetoWorkout() {
+        dialog2Builder = new AlertDialog.Builder(this);
+        final View addExercisePopUpView = getLayoutInflater().inflate(R.layout.addexercise_popup, null);
+        // TextView
+        exerciseName = addExercisePopUpView.findViewById(R.id.exerciseName);
+        closeTV = addExercisePopUpView.findViewById(R.id.closeTV);
+        setNumberTV = addExercisePopUpView.findViewById(R.id.setNumberTV);
+        // EditText
+        repET = addExercisePopUpView.findViewById(R.id.repET);
+        rpeET = addExercisePopUpView.findViewById(R.id.rpeET);
+        weightET = addExercisePopUpView.findViewById(R.id.weightET);
+        // Button
+        addSetButton = addExercisePopUpView.findViewById(R.id.addSetButton);
+        removeSetButton = addExercisePopUpView.findViewById(R.id.removeSetButton);
+        addExerciseButton = addExercisePopUpView.findViewById(R.id.addExerciseButton);
+        // show popup
+        exerciseName.setText(choice.getName());
+        dialog2Builder.setView(addExercisePopUpView);
+        dialog2 = dialog2Builder.create();
+        dialog2.show();
+        // on click listeners
+        addSetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog2.dismiss(); // change soon
+            }
+        });
+        removeSetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog2.dismiss(); // change soon
+            }
+        });
+        addExerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userList.add(choice);
+                chipGroup = findViewById(R.id.chipGroup);
+                chip = (Chip) getLayoutInflater().inflate(R.layout.chip_layout, chipGroup, false);
+                chip.setText(choice.getName());
+                chipGroup.addView(chip);
+                dialog2.dismiss();
             }
         });
     }
