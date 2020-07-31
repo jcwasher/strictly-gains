@@ -169,6 +169,7 @@ class DataHelper {
                         set.put("weight", w.getExercise(i).getSet(j).getWeight());
                         set.put("reps", w.getExercise(i).getSet(j).getReps());
                         set.put("success", w.getExercise(i).getSet(j).isSuccess());
+                        set.put("rpe", w.getExercise(i).getSet(j).getRPE());
                         setArray.put(set);
                     }
 
@@ -219,7 +220,7 @@ class DataHelper {
                 JSONArray jsonSetList = j.getJSONArray("setList");
                 for(int k = 0; k < jsonSetList.length(); k++) {
                     JSONObject l = jsonSetList.getJSONObject(k);
-                    exercises.get(i).addSet(new Set( l.getDouble("weight"), l.getInt("reps"), l.getBoolean("success")));
+                    exercises.get(i).addSet(new Set( l.getDouble("weight"), l.getInt("reps"), l.getBoolean("success"), l.getInt("rpe")));
                 }
             }
         } catch(JSONException e) {

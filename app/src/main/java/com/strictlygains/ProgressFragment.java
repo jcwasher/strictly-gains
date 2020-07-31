@@ -87,7 +87,7 @@ public class ProgressFragment extends Fragment {
 
                             // parse through each set and update localMax as needed
                             for(Set s : e.getSetList()) {
-                                if(s.getWeight() > localMax)
+                                if((s.getWeight() > localMax) && s.isSuccess())
                                     localMax = (float)s.getWeight();
                             }
                             // access the corresponding entry list and add the new max
