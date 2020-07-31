@@ -2,6 +2,7 @@ package com.strictlygains;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,9 +20,12 @@ import android.widget.Toast;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class WorkoutCreateActivity extends AppCompatActivity implements View.OnClickListener{
     private SearchView search;
@@ -33,12 +37,13 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
     private ArrayList<Exercise> exerciseList, userList;
     private ArrayAdapter<String> adapter;
     private Workout newWorkout;
+    private String newWorkoutName;
     private Exercise choice;
     private boolean exists;
-    private EditText editText, repET, rpeET, weightET;
+    private EditText editText, saveWorkoutET, repET, rpeET, weightET;
     private TextView setNumberTV, closeTV, exerciseName;
     private Button addSetButton, removeSetButton, addExerciseButton;
-    private AlertDialog dialog, dialog2;
+    private AlertDialog dialog, dialog2, dialog3;
     private AlertDialog.Builder dialog2Builder;
 
 
@@ -86,7 +91,7 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
                 for(int i = 0; i < exerciseList.size(); i++) {
                     if(Objects.equals(adapter.getItem(position), exerciseList.get(i).getName())) {
                         choice = exerciseList.get(i);
-                        addExercisetoWorkout();
+                        addExerciseToWorkout();
                         break;
                     }
                 }
@@ -116,7 +121,6 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
                                             break;
                                         }
                                     }
-
                                 }
                                 // update IDs
                                 for (int i=0; i<exerciseList.size(); i++)
@@ -178,7 +182,7 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
         });
     }
 
-    public void addExercisetoWorkout() {
+    public void addExerciseToWorkout() {
         dialog2Builder = new AlertDialog.Builder(this);
         final View addExercisePopUpView = getLayoutInflater().inflate(R.layout.addexercise_popup, null);
         // TextView
@@ -199,37 +203,77 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
         dialog2 = dialog2Builder.create();
         dialog2.show();
         // on click listeners
-        addSetButton.setOnClickListener(new View.OnClickListener() {
+        closeTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog2.dismiss(); // change soon
+                dialog2.dismiss();
+            }
+        });
+        addSetButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View v) {
+                if(rpeET.getText().toString().isEmpty() || weightET.getText().toString().isEmpty() || repET.toString().isEmpty())
+                    System.out.println("One field was empty");
+                else
+                {
+                    double weight = Double.parseDouble(weightET.getText().toString());
+                    int reps = Integer.parseInt(repET.getText().toString());
+                    int rpe = Integer.parseInt(rpeET.getText().toString());
+                    choice.addSet(new Set(weight, reps, rpe));
+                    int newSetNum = choice.getSetList().size() + 1;
+                    setNumberTV.setText("Set " + newSetNum);
+                }
             }
         });
         removeSetButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                dialog2.dismiss(); // change soon
+                int listSize = choice.getSetList().size();
+                if(listSize > 0) {
+                    choice.getSetList().remove(listSize - 1);
+                    int newSetNum = choice.getSetList().size() + 1;
+                    setNumberTV.setText("Set " + newSetNum);
+                }
             }
         });
         addExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userList.add(choice);
-                chipGroup = findViewById(R.id.chipGroup);
-                chip = (Chip) getLayoutInflater().inflate(R.layout.chip_layout, chipGroup, false);
-                chip.setText(choice.getName());
-                chipGroup.addView(chip);
-                dialog2.dismiss();
+                if(choice.getSetList().size() > 0) {
+                    newWorkout.addExercise(choice);
+                    chipGroup = findViewById(R.id.chipGroup);
+                    chip = (Chip) getLayoutInflater().inflate(R.layout.chip_layout, chipGroup, false);
+                    chip.setText(choice.getName());
+                    chipGroup.addView(chip);
+                    dialog2.dismiss();
+                }
+                else
+                    System.out.println("Empty set list");
             }
         });
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         if (v.getId() == R.id.saveButton) {
-            // Save currently selected workout plan in file
-            DataHelper.saveExercises(this, userList);;
-            startActivity(new Intent(this, MainActivity.class));
+            saveWorkoutET = new EditText(v.getContext());
+            dialog3 = new AlertDialog.Builder(v.getContext()).create();
+            dialog3.setTitle("Workout Name");
+            dialog3.setView(saveWorkoutET);
+            dialog3.setButton(DialogInterface.BUTTON_POSITIVE, "SAVE WORKOUT", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(saveWorkoutET.getText().toString().length() > 0) {
+                        newWorkoutName = saveWorkoutET.getText().toString();
+                        newWorkout.setName(newWorkoutName);
+                        DataHelper.saveWorkout(v.getContext(), newWorkout, new String("userWorkout_" + newWorkout.getName() + ".json"));
+                        startActivity(new Intent(v.getContext(), MainActivity.class));
+                    }
+                }
+            });
+            dialog3.show();
         } else if (v.getId() != R.id.chipGroup && v.getId() != R.id.createButton){
             Chip c = (Chip) v;
             for (int i = 0; i < userList.size(); i++) {
@@ -239,10 +283,8 @@ public class WorkoutCreateActivity extends AppCompatActivity implements View.OnC
                 }
             }
             chipGroup.removeView(v);   // Removes chip when clicked
-            //Toast.makeText(WorkoutCreateActivity.this,  c.getText()+ " Removed", Toast.LENGTH_SHORT).show();
         } else if (v.getId() == R.id.createButton){
             dialog.show();
-
         }
     }
 

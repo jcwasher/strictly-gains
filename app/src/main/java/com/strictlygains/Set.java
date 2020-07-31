@@ -13,6 +13,11 @@ public class Set {
         this(w, rep, false);
     }
 
+    public Set(double w, int rep, int rp) {
+        this(w, rep, false);
+        rpe = rp;
+    }
+
     public Set(double w, int rep, boolean suc) {
         weight = w;
         reps = rep;
