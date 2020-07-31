@@ -63,7 +63,10 @@ public class ProgressFragment extends Fragment {
             for (File f : fList) {
                 System.out.println(Arrays.toString(fList));
                 // ignore the workout template
-                if(!f.getName().equals("userExercises.json") && !f.getName().equals("exerciseHistory.json") && !f.getName().contains("userWorkout_")) {
+                if(!f.getName().equals("userExercises.json")
+                    && !f.getName().equals("exerciseHistory.json")
+                    && !f.getName().contains("userWorkout_")
+                    && !f.getName().equals("currentWorkout.json")) {
                     // get the exercise list associated with workout tied to File f
                     ArrayList<Exercise> eList = DataHelper.loadWorkoutExercises(getContext(), f.getName());
                     // parse through each exercise
@@ -84,7 +87,7 @@ public class ProgressFragment extends Fragment {
 
                             // parse through each set and update localMax as needed
                             for(Set s : e.getSetList()) {
-                                if(s.getWeight() > localMax)
+                                if((s.getWeight() > localMax) && s.isSuccess())
                                     localMax = (float)s.getWeight();
                             }
                             // access the corresponding entry list and add the new max

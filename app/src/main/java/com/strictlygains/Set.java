@@ -26,6 +26,12 @@ public class Set {
         rpe = 0;
     }
 
+    public Set(double w, int rep, boolean suc, int rp) {
+        this(w, rep, suc);
+        warmup = false;
+        rpe = rp;
+    }
+
     public void setWeight(double w) {
         weight = w;
     }

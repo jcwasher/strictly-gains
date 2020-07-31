@@ -16,67 +16,104 @@ import java.util.Date;
 import java.util.Locale;
 
 public class StartWorkoutActivity extends AppCompatActivity implements View.OnClickListener {
-    int exerciseIndex = 0;
-    int setIndex = 0;
-    int setNum = 1;
-    TextView exerciseName, setTV;
-    EditText weightValue, repValue;
-    ArrayList<Exercise> userList, eHistoryList;
-    Button nextExercise, setSuccess, setFailure;
-    Workout currentWorkout;
+    private int exerciseIndex = 0;
+    private int setIndex = 0;
+    private int setNum = 1;
+    private int totalSetNum;
+    private TextView exerciseName, setTV;
+    private EditText weightET, repET, rpeET;
+    private ArrayList<Exercise> userList, eHistoryList;
+    private Button nextExercise, setSuccess, setFailure;
+    private Workout currentWorkout;
+    private Set currentSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_start);
-        // NEEDS COMPLETE REWORK
+
+        // define UI elements
+        exerciseName = findViewById(R.id.exerciseName);
+        setTV = findViewById(R.id.setNumberTV);
+
+        weightET = findViewById(R.id.weightET);
+        repET = findViewById(R.id.repET);
+        rpeET = findViewById(R.id.rpeET);
+
+        nextExercise = findViewById(R.id.nextExercise);
+        nextExercise.setOnClickListener(this);
+        setSuccess = findViewById(R.id.setSuccess);
+        setSuccess.setOnClickListener(this);
+        setFailure = findViewById(R.id.setFailed);
+        setFailure.setOnClickListener(this);
+
+        currentWorkout = new Workout();
+        currentWorkout.setExerciseList(DataHelper.loadWorkoutExercises(this, "currentWorkout.json"));
+
+        // set UI elements to reflect the first exercise
+        exerciseName.setText(currentWorkout.getExercise(exerciseIndex).getName());
+        currentSet = currentWorkout.getExercise(exerciseIndex).getSet(setIndex);
+        weightET.setText(String.valueOf(currentSet.getWeight()));
+        repET.setText(String.valueOf(currentSet.getReps()));
+        rpeET.setText(String.valueOf(currentSet.getRPE()));
+
+        totalSetNum = currentWorkout.getExercise(exerciseIndex).getSetList().size();
+        setTV.setText("Set 1 / " + totalSetNum);
+        // if Workout has only one exercise, update the nextExercise button to reflect this
+        if(currentWorkout.getExerciseList().size() == 1)
+            nextExercise.setText("Finish Workout");
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.setSuccess:
-                currentWorkout.getExercise(exerciseIndex).addSet( new Set(Integer.parseInt(weightValue.getText().toString()), Integer.parseInt(repValue.getText().toString())) );
-                currentWorkout.getExercise(exerciseIndex).getSet(setIndex++).setSuccess(true);
-                setTV.setText(new String("Set " + ++setNum));
-                String weight = weightValue.getText().toString();
-                // Loop through exercise history. If set weight is greater than Max, update Max
-                if (eHistoryList != null)
-                for (int i=0; i<eHistoryList.size(); i++){
-                    if (eHistoryList.get(i).getName().equals(userList.get(exerciseIndex).getName())){
-                        if (!weight.equals("0") && Double.parseDouble(weight) > eHistoryList.get(i).getMax()){
-                            eHistoryList.get(i).setMax(Double.parseDouble(weight));
-                        }
-                    }
-                }
+                if(setNum < totalSetNum) {
+                    currentSet = currentWorkout.getExercise(exerciseIndex).getSet(setIndex++);
+                    // if the user changed any of the values during exercise
+                    currentSet.setWeight(Double.parseDouble(String.valueOf(weightET.getText())));
+                    currentSet.setReps(Integer.parseInt(String.valueOf(repET.getText())));
+                    currentSet.setRPE(Integer.parseInt(String.valueOf(rpeET.getText())));
+                    currentSet.setSuccess(true);
 
+                    // update the UI
+                    currentSet = currentWorkout.getExercise(exerciseIndex).getSet(setIndex);
+                    weightET.setText(String.valueOf(currentSet.getWeight()));
+                    repET.setText(String.valueOf(currentSet.getReps()));
+                    rpeET.setText(String.valueOf(currentSet.getRPE()));
+
+                    setTV.setText("Set " + ++setNum + " / " + totalSetNum);
+
+                    String weight = String.valueOf(weightET.getText());
+                    // Loop through exercise history. If set weight is greater than Max, update Max
+                    if (eHistoryList != null)
+                        for (int i = 0; i < eHistoryList.size(); i++) {
+                            if (eHistoryList.get(i).getName().equals(currentWorkout.getExercise(exerciseIndex).getName())) {
+                                if (!weight.equals("0") && Double.parseDouble(weight) > eHistoryList.get(i).getMax()) {
+                                    eHistoryList.get(i).setMax(Double.parseDouble(weight));
+                                }
+                            }
+                        }
+                }
+                else
+                    nextExercise.performClick();
                 break;
             case R.id.setFailed:
-                currentWorkout.getExercise(exerciseIndex).addSet( new Set(Integer.parseInt(weightValue.getText().toString()), Integer.parseInt(repValue.getText().toString())) );
-                currentWorkout.getExercise(exerciseIndex).getSet(setIndex).setSuccess(false);
                 nextExercise.performClick();
                 break;
             case R.id.nextExercise:
-                if ( exerciseIndex < currentWorkout.getExerciseList().size() - 1 ) {
-                    exerciseName.setText(currentWorkout.getExercise(++exerciseIndex).getName());
-                    if( exerciseIndex == currentWorkout.getExerciseList().size() - 1)
-                        nextExercise.setText(new String("Finish Workout"));
-                    setIndex = 0;
-                    setNum = 1;
-                    setTV.setText(new String("Set " + setNum));
+                if (true) {
+                    // rework
                 } else {
-                    exerciseIndex = 0;
-                    setIndex = 0;
-                    setNum = 1;
                     nextExercise.setClickable(false);
-
+                    /*
                     Date date = Calendar.getInstance().getTime();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmm", Locale.US);
                     String dateString = sdf.format(date);
                     DataHelper.saveWorkout(this, currentWorkout, new String( dateString + ".json") );
                     // Update max weight
                     DataHelper.updateExerciseHistory(this, eHistoryList);
-                    startActivity(new Intent(this, MainActivity.class));
+                    startActivity(new Intent(this, MainActivity.class)); */
                 }
                 break;
             default:
