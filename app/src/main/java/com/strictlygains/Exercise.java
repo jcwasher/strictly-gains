@@ -9,15 +9,17 @@ public class Exercise {
     private String focus;
     private ArrayList<Set> setList;
 
-    public Exercise() { }
+    public Exercise() {
+        setList = new ArrayList<Set>();
+    }
 
-    public Exercise(int i, double m, double g,  String n, String f) {
+    public Exercise(int i, double m, double g, String n, String f) {
+        this();
         id = i;
         max = m;
         goal = g;
         name = n;
         focus = f;
-        setList = new ArrayList<>();
     }
 
     public void setID(int i) {

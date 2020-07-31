@@ -4,10 +4,16 @@ import java.util.ArrayList;
 
 public class Workout {
     private int id;
+    private String name;
     private ArrayList<Exercise> exerciseList;
 
     public Workout() {
         exerciseList = new ArrayList<>();
+    }
+
+    public Workout(String n) {
+        this();
+        name = n;
     }
 
     public Workout(int i) {
@@ -19,8 +25,16 @@ public class Workout {
         id = i;
     }
 
+    public void setName(String n) {
+        name = n;
+    }
+
     public int getID() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Exercise getExercise(int index) {

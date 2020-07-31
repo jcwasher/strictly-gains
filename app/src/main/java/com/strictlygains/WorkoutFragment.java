@@ -17,11 +17,13 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class WorkoutFragment extends Fragment implements View.OnClickListener{
-    private ArrayList<Exercise> userList;
+    private ArrayList<Workout> workoutList;
+    private Workout currentWorkout;
     private ListView wList;
 
     @Nullable
@@ -33,9 +35,24 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
         FloatingActionButton actionButton = view.findViewById(R.id.createButton);
         actionButton.setOnClickListener(this);
         Button statsButton = view.findViewById(R.id.statsButton);
+        FloatingActionButton editButton = view.findViewById(R.id.editButton);
+        // ONLY CREATE BUTTON WORKS
+        editButton.setClickable(false);
         statsButton.setClickable(false);
+        startButton.setClickable(false);
 
         wList = view.findViewById(R.id.workoutList);
+        workoutList = getUserWorkouts();
+
+        if(workoutList.size() > 0) {
+            ArrayList<String> list = new ArrayList<>();
+
+            for(int i = 0; i < workoutList.size(); i++)
+                list.add(workoutList.get(i).getName());
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
+            wList.setAdapter(adapter);
+        }
         return view;
     }
 
@@ -44,7 +61,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     {
         switch (view.getId()) {
             case R.id.beginButton: {
-                if (userList == null || userList.size() == 0)
+                if (false) // currentWorkout needs to be selected
                     Toast.makeText(getActivity(), "Please select a workout.", Toast.LENGTH_SHORT ).show();
                 else
                     openStartWorkoutActivity();
@@ -61,17 +78,39 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        userList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "userExercises.json");
+        workoutList = getUserWorkouts();
 
-        if(userList != null) {
+        if(workoutList.size() > 0) {
             ArrayList<String> list = new ArrayList<>();
 
-            for(int i = 0; i < userList.size(); i++)
-                list.add(userList.get(i).getName());
+            for(int i = 0; i < workoutList.size(); i++)
+                list.add(workoutList.get(i).getName());
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
             wList.setAdapter(adapter);
         }
+    }
+
+    private ArrayList<Workout> getUserWorkouts() {
+        ArrayList<Workout> workoutList = new ArrayList<>();
+        File dir = new File(Objects.requireNonNull(getContext()).getFilesDir().toString());
+        File[] fList = dir.listFiles();
+
+        if(fList != null) {
+            for (File f : fList) {
+                // we have found a user created workout
+                if(f.getName().contains("userWorkout_")) {
+                    Workout w = new Workout();
+                    w.setExerciseList(DataHelper.loadWorkoutExercises(getContext(), f.getName()));
+                    String name = f.getName();
+                    name = name.substring(12, name.length()-5);
+                    w.setName(name);
+                    workoutList.add(w);
+                }
+            }
+        }
+
+        return workoutList;
     }
 
     private void openWorkoutCreateActivity()
