@@ -19,8 +19,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class ProfileFragment extends Fragment {
 
+    private ArrayList<Exercise> eHistoryList;
     FirebaseUser user;
     private static final String[] genderOptions = new String[] {
             "Male", "Female", "Other"
@@ -34,16 +38,14 @@ public class ProfileFragment extends Fragment {
 
         TextView profileName = view.findViewById(R.id.profile_fullname);
 
-        TextInputEditText gender = view.findViewById(R.id.profile_gender);
-
-
+       // eHistoryList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "exerciseHistory.json");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
             profileName.setText(user.getDisplayName());
         }
 
-
+/*
         gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +71,7 @@ public class ProfileFragment extends Fragment {
         });
 
 
-
+*/
 
         return view;
     }
