@@ -63,7 +63,10 @@ public class ProgressFragment extends Fragment {
             for (File f : fList) {
                 System.out.println(Arrays.toString(fList));
                 // ignore the workout template
-                if(!f.getName().equals("userExercises.json") && !f.getName().equals("exerciseHistory.json") && !f.getName().contains("userWorkout_")) {
+                if(!f.getName().equals("userExercises.json")
+                    && !f.getName().equals("exerciseHistory.json")
+                    && !f.getName().contains("userWorkout_")
+                    && !f.getName().equals("currentWorkout")) {
                     // get the exercise list associated with workout tied to File f
                     ArrayList<Exercise> eList = DataHelper.loadWorkoutExercises(getContext(), f.getName());
                     // parse through each exercise

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ import java.util.Objects;
 
 public class WorkoutFragment extends Fragment implements View.OnClickListener{
     private ArrayList<Workout> workoutList;
+    private ArrayAdapter<String> adapter;
     private Workout currentWorkout;
     private ListView wList;
 
@@ -36,10 +38,9 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
         actionButton.setOnClickListener(this);
         Button statsButton = view.findViewById(R.id.statsButton);
         FloatingActionButton editButton = view.findViewById(R.id.editButton);
-        // ONLY CREATE BUTTON WORKS
+        // THESE BUTTONS NOT READY
         editButton.setClickable(false);
         statsButton.setClickable(false);
-        startButton.setClickable(false);
 
         wList = view.findViewById(R.id.workoutList);
         workoutList = getUserWorkouts();
@@ -50,8 +51,19 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
             for(int i = 0; i < workoutList.size(); i++)
                 list.add(workoutList.get(i).getName());
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
+            adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, list);
             wList.setAdapter(adapter);
+            wList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    for(int i = 0; i < workoutList.size(); i++) {
+                        if(Objects.equals(adapter.getItem(position), workoutList.get(i).getName())) {
+                            currentWorkout = workoutList.get(i);
+                            break;
+                        }
+                    }
+                }
+            });
         }
         return view;
     }
@@ -61,10 +73,12 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     {
         switch (view.getId()) {
             case R.id.beginButton: {
-                if (false) // currentWorkout needs to be selected
+                if (currentWorkout == null) // currentWorkout needs to be selected
                     Toast.makeText(getActivity(), "Please select a workout.", Toast.LENGTH_SHORT ).show();
-                else
+                else {
+                    DataHelper.saveWorkout(Objects.requireNonNull(getContext()), currentWorkout, "currentWorkout.json");
                     openStartWorkoutActivity();
+                }
                 break;
             }
             case R.id.createButton:
@@ -86,7 +100,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
             for(int i = 0; i < workoutList.size(); i++)
                 list.add(workoutList.get(i).getName());
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, list);
+            adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()), android.R.layout.simple_list_item_1, list);
             wList.setAdapter(adapter);
         }
     }
