@@ -7,12 +7,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/nav_profilename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/rancho"
-        android:text="Hi, Jane Doe"
+        android:text="@string/temporary_header"
         android:textColor="@android:color/white"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_margin="30sp"/>
 </androidx.drawerlayout.widget.DrawerLayout>

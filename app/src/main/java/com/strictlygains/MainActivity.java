@@ -17,10 +17,12 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.strictlygains.ui.login.LoginActivity;
 import com.strictlygains.ui.main.SectionsPagerAdapter;
 
@@ -38,8 +40,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     TabLayout tabs;
+    TextView navDrawerName;
 
     FirebaseAuth fAuth;
+    FirebaseUser user;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -51,7 +55,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        navDrawerName = findViewById(R.id.nav_profilename);
+
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer);
@@ -77,6 +83,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+/*
+        user = fAuth.getCurrentUser();
+        if(user != null) {
+            navDrawerName.setText(user.getDisplayName());
+        } */
+
         // invert
         ViewCompat.setLayoutDirection(tabs, ViewCompat.LAYOUT_DIRECTION_LTR);
         ViewCompat.setLayoutDirection(viewPager, ViewCompat.LAYOUT_DIRECTION_LTR);
@@ -98,12 +110,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         drawerLayout.closeDrawer(GravityCompat.START);
 
-        switch(id) {
-            case R.id.nav_logout:
-                fAuth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
-                break;
+        if(id == R.id.nav_logout)  {
+            fAuth.signOut();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         }
 
         return false;
