@@ -29,39 +29,7 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout_start);
-        exerciseName = findViewById(R.id.exerciseName);
-        weightValue = findViewById(R.id.weightValue);
-        weightValue.setOnFocusChangeListener( new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean isFocus) {
-                if(isFocus)
-                    weightValue.setText("");
-            }
-        });
-
-        repValue = findViewById(R.id.repValue);
-        repValue.setOnFocusChangeListener(  new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean isFocus) {
-                if(isFocus)
-                    repValue.setText("");
-            }
-        });
-        setTV = findViewById(R.id.setTV);
-        nextExercise = findViewById(R.id.nextExercise);
-        nextExercise.setOnClickListener(this);
-        setSuccess = findViewById(R.id.setSuccess);
-        setSuccess.setOnClickListener(this);
-        setFailure = findViewById(R.id.setFailed);
-        setFailure.setOnClickListener(this);
-
-        userList = DataHelper.loadExercises(this, "userExercises.json");
-        eHistoryList = DataHelper.loadExercises(this, "exerciseHistory.json" );
-        currentWorkout = new Workout(1);
-        currentWorkout.setExerciseList(userList);
-        exerciseName.setText(currentWorkout.getExercise(exerciseIndex).getName());
-        if(currentWorkout.getExerciseList().size() == 1)
-            nextExercise.setText(new String("Finish Workout"));
+        // NEEDS COMPLETE REWORK
     }
 
     @Override
