@@ -28,4 +28,5 @@
     <string name="date_joined">"Joined: "</string>
     <string name="zero">0</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="temporary_exercises">Other Exercises\n Coming Soon</string>
 </resources>

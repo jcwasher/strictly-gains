@@ -37,8 +37,21 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.profile_layout, container, false);
 
         TextView profileName = view.findViewById(R.id.profile_fullname);
+        TextView benchMax = view.findViewById(R.id.bench_press_max);
+        TextView squatMax = view.findViewById(R.id.squat_max);
+        TextView deadliftMax = view.findViewById(R.id.deadlift_max);
 
-       // eHistoryList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "exerciseHistory.json");
+        eHistoryList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "exerciseHistory.json");
+
+
+
+        // Plan on adding custom exercises with scorllview.
+        if(eHistoryList != null) {
+            benchMax.setText(String.valueOf(eHistoryList.get(1).getMax())); // id 1 points to bench press
+            squatMax.setText(String.valueOf(eHistoryList.get(3).getMax())); // id 3 points to
+            deadliftMax.setText(String.valueOf(eHistoryList.get(2).getMax())); // id 2 points to bench press
+        }
+
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
