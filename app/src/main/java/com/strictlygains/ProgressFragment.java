@@ -66,7 +66,7 @@ public class ProgressFragment extends Fragment {
                 if(!f.getName().equals("userExercises.json")
                     && !f.getName().equals("exerciseHistory.json")
                     && !f.getName().contains("userWorkout_")
-                    && !f.getName().equals("currentWorkout")) {
+                    && !f.getName().equals("currentWorkout.json")) {
                     // get the exercise list associated with workout tied to File f
                     ArrayList<Exercise> eList = DataHelper.loadWorkoutExercises(getContext(), f.getName());
                     // parse through each exercise
