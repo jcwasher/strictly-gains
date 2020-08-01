@@ -61,9 +61,9 @@ public class ProfileFragment extends Fragment {
 
         // Plan on adding custom exercises with scorllview.
         if(eHistoryList != null) {
-            benchMax.setText(String.valueOf(eHistoryList.get(1).getMax())); // id 1 points to bench press
-            squatMax.setText(String.valueOf(eHistoryList.get(3).getMax())); // id 3 points to
-            deadliftMax.setText(String.valueOf(eHistoryList.get(2).getMax())); // id 2 points to bench press
+            benchMax.setText(String.valueOf((int)eHistoryList.get(1).getMax())); // id 1 points to bench press
+            squatMax.setText(String.valueOf((int)eHistoryList.get(3).getMax())); // id 3 points to
+            deadliftMax.setText(String.valueOf((int)eHistoryList.get(2).getMax())); // id 2 points to bench press
         }
 
 
