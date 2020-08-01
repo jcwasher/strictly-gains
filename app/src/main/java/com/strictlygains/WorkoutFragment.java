@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +28,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
     private ArrayAdapter<String> adapter;
     private Workout currentWorkout;
     private ListView wList;
+    private TextView currentWorkoutTV;
 
     @Nullable
     @Override
@@ -36,11 +38,11 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
         startButton.setOnClickListener(this);
         FloatingActionButton actionButton = view.findViewById(R.id.createButton);
         actionButton.setOnClickListener(this);
-        Button statsButton = view.findViewById(R.id.statsButton);
         FloatingActionButton editButton = view.findViewById(R.id.editButton);
+        currentWorkoutTV = view.findViewById(R.id.currentWorkoutTV);
+
         // THESE BUTTONS NOT READY
         editButton.setClickable(false);
-        statsButton.setClickable(false);
 
         wList = view.findViewById(R.id.workoutList);
         workoutList = getUserWorkouts();
@@ -59,6 +61,7 @@ public class WorkoutFragment extends Fragment implements View.OnClickListener{
                     for(int i = 0; i < workoutList.size(); i++) {
                         if(Objects.equals(adapter.getItem(position), workoutList.get(i).getName())) {
                             currentWorkout = workoutList.get(i);
+                            currentWorkoutTV.setText("Current Workout: " + currentWorkout.getName());
                             break;
                         }
                     }

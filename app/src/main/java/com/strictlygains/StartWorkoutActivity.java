@@ -25,6 +25,7 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
     private ArrayList<Exercise> userList, eHistoryList;
     private Button nextExercise, setSuccess, setFailure;
     private Workout currentWorkout;
+    private Exercise currentExercise;
     private Set currentSet;
 
     @Override
@@ -49,6 +50,7 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
 
         currentWorkout = new Workout();
         currentWorkout.setExerciseList(DataHelper.loadWorkoutExercises(this, "currentWorkout.json"));
+        eHistoryList = DataHelper.loadExercises(this, "exerciseHistory.json" );
 
         // set UI elements to reflect the first exercise
         exerciseName.setText(currentWorkout.getExercise(exerciseIndex).getName());
@@ -70,19 +72,9 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
             case R.id.setSuccess:
                 if(setNum < totalSetNum) {
                     currentSet = currentWorkout.getExercise(exerciseIndex).getSet(setIndex++);
-                    // if the user changed any of the values during exercise
-                    currentSet.setWeight(Double.parseDouble(String.valueOf(weightET.getText())));
-                    currentSet.setReps(Integer.parseInt(String.valueOf(repET.getText())));
-                    currentSet.setRPE(Integer.parseInt(String.valueOf(rpeET.getText())));
                     currentSet.setSuccess(true);
-
-                    // update the UI
-                    currentSet = currentWorkout.getExercise(exerciseIndex).getSet(setIndex);
-                    weightET.setText(String.valueOf(currentSet.getWeight()));
-                    repET.setText(String.valueOf(currentSet.getReps()));
-                    rpeET.setText(String.valueOf(currentSet.getRPE()));
-
-                    setTV.setText("Set " + ++setNum + " / " + totalSetNum);
+                    updateSet(); // in case the user edited any text fields
+                    updateUI();
 
                     String weight = String.valueOf(weightET.getText());
                     // Loop through exercise history. If set weight is greater than Max, update Max
@@ -95,29 +87,52 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
                             }
                         }
                 }
-                else
+                else {
+                    currentSet.setSuccess(true);
                     nextExercise.performClick();
+                }
                 break;
             case R.id.setFailed:
                 nextExercise.performClick();
                 break;
             case R.id.nextExercise:
-                if (true) {
-                    // rework
+                if (++exerciseIndex < currentWorkout.getExerciseList().size()) {
+                    if(exerciseIndex == currentWorkout.getExerciseList().size() - 1)
+                        nextExercise.setText("Finish Workout");
+
+                    setIndex = 0;
+                    setNum = 0;
+                    updateUI();
                 } else {
                     nextExercise.setClickable(false);
-                    /*
                     Date date = Calendar.getInstance().getTime();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmm", Locale.US);
                     String dateString = sdf.format(date);
                     DataHelper.saveWorkout(this, currentWorkout, new String( dateString + ".json") );
                     // Update max weight
                     DataHelper.updateExerciseHistory(this, eHistoryList);
-                    startActivity(new Intent(this, MainActivity.class)); */
+                    startActivity(new Intent(this, MainActivity.class));
                 }
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
+    }
+
+    private void updateSet() {
+        // if the user changed any of the values during exercise
+        currentSet.setWeight(Double.parseDouble(String.valueOf(weightET.getText())));
+        currentSet.setReps(Integer.parseInt(String.valueOf(repET.getText())));
+        currentSet.setRPE(Integer.parseInt(String.valueOf(rpeET.getText())));
+    }
+
+    private void updateUI() {
+        currentExercise = currentWorkout.getExercise(exerciseIndex);
+        currentSet = currentExercise.getSet(setIndex);
+        exerciseName.setText(currentExercise.getName());
+        weightET.setText(String.valueOf(currentSet.getWeight()));
+        repET.setText(String.valueOf(currentSet.getReps()));
+        rpeET.setText(String.valueOf(currentSet.getRPE()));
+        setTV.setText("Set " + ++setNum + " / " + totalSetNum);
     }
 }
