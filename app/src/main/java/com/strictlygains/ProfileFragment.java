@@ -57,8 +57,6 @@ public class ProfileFragment extends Fragment {
 
         eHistoryList = DataHelper.loadExercises(Objects.requireNonNull(getContext()), "exerciseHistory.json");
 
-
-
         // Plan on adding custom exercises with scorllview.
         if(eHistoryList != null) {
             for(int i = 0; i < eHistoryList.size(); i++) {
