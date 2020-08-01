@@ -170,6 +170,8 @@ class DataHelper {
                         set.put("reps", w.getExercise(i).getSet(j).getReps());
                         set.put("success", w.getExercise(i).getSet(j).isSuccess());
                         set.put("rpe", w.getExercise(i).getSet(j).getRPE());
+                        set.put("date", w.getExercise(i).getSet(j).getDate());
+
                         setArray.put(set);
                     }
 

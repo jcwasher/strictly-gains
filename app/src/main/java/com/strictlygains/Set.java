@@ -1,11 +1,14 @@
 package com.strictlygains;
 
+import java.util.Date;
+
 public class Set {
     private double weight;
     private int reps;
     private boolean success;
     private boolean warmup;
     private int rpe;
+    private long date;
 
     public Set() { }
 
@@ -24,6 +27,7 @@ public class Set {
         success = suc;
         warmup = false;
         rpe = 0;
+        date = new Date().getTime();
     }
 
     public Set(double w, int rep, boolean suc, int rp) {
@@ -70,5 +74,13 @@ public class Set {
 
     public int getRPE() {
         return rpe;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long d) {
+        date = new Date().getTime();
     }
 }
