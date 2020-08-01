@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "996047586748",
+    "firebase_url": "https://strictly-gains.firebaseio.com",
+    "project_id": "strictly-gains",
+    "storage_bucket": "strictly-gains.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996047586748:android:da32a84582040108a197b9",
+        "android_client_info": {
+          "package_name": "com.strictlygains"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996047586748-vmqrariacnthpgdqul2hlfgj24qmnl0j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.strictlygains",
+            "certificate_hash": "5c1f3709714f3bf48f8982812781c74c2f0cfe94"
+          }
+        },
+        {
+          "client_id": "996047586748-dctvtlo69f0ggh7hm5u1opp6c9nedaas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZzd1l0CfH9XaQ_l9vMfA-6sDx78WXcos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996047586748-dctvtlo69f0ggh7hm5u1opp6c9nedaas.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
