@@ -286,7 +286,7 @@
 
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
+<!--
 
     <TextView
         android:layout_width="wrap_content"
@@ -448,6 +448,8 @@
 
         </LinearLayout>
     </ScrollView>
+
+    -->
 
     <RelativeLayout
         android:layout_width="match_parent"
