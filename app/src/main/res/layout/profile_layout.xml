@@ -107,20 +107,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="5dp">
+
                 <TextView
                     android:layout_width="90dp"
                     android:layout_height="30dp"
-                    android:textColor="@android:color/white"
-                    android:fontFamily="sans-serif-thin"
-                    android:textAlignment="center"
                     android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-thin"
                     android:text="@string/bench_max"
-                    />
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white" />
 
                 <TextView
+                    android:id="@+id/bench_press_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bench_press_max"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/rancho"
                     android:text="@string/zero"
@@ -286,59 +286,165 @@
     </LinearLayout>
 
 
-
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="@string/temporary_exercises"
-        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:fontFamily="@font/rancho"
-        android:textSize="30sp"/>
+        android:textColor="@color/colorPrimary"
+        android:text="@string/custom_exercise"
+        android:textSize="30sp" />
+
     <ScrollView
         android:id="@+id/profile_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="120dp">
 
-
-        <!--
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="5dp">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="@string/gender">
+                android:layout_height="100dp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/profile_gender"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textAlignment="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/custom_exercise"
+                        />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/rancho"
+                        android:text="@string/zero"
+                        android:textSize="20sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:hint="@string/age">
+                android:layout_height="100dp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="10dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/age"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textAlignment="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/custom_exercise"
+                        />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/rancho"
+                        android:text="@string/zero"
+                        android:textSize="20sp" />
 
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textAlignment="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/custom_exercise"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/rancho"
+                        android:text="@string/zero"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:theme="@style/Theme.MaterialComponents.Light"
+                app:cardBackgroundColor="@color/colorPrimaryDark"
+                app:cardCornerRadius="3dp"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:textColor="@android:color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textAlignment="center"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/custom_exercise"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/rancho"
+                        android:text="@string/zero"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
 
 
         </LinearLayout>
-        -->
     </ScrollView>
 
     <RelativeLayout
