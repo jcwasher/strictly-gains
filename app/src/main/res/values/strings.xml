@@ -18,7 +18,7 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="gender">Gender: </string>
-    <string name="age">Age: </string>
+    <string name="age">Age</string>
     <string name="height">Height</string>
     <string name="weight">Weight</string>
     <string name="bench_max">Bench</string>
@@ -36,4 +36,10 @@
     <string name="begin">Begin</string>
     <string name="edit">Edit</string>
     <string name="create">Create</string>
+    
+    <string-array name="genderList">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
 </resources>

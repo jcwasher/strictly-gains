@@ -11,8 +11,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,10 +37,6 @@ public class ProfileFragment extends Fragment {
 
     private ArrayList<Exercise> eHistoryList;
     FirebaseUser user;
-    private static final String[] genderOptions = new String[] {
-            "Male", "Female", "Other"
-    };
-    private String radioButton;
 
     @Nullable
     @Override
@@ -44,6 +44,11 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.profile_layout, container, false);
 
         TextView profileName = view.findViewById(R.id.profile_fullname);
+        final TextView profileGender = view.findViewById(R.id.profile_gender);
+        final TextView profileAge = view.findViewById(R.id.profile_age);
+        final TextView profileHeight = view.findViewById(R.id.profile_height);
+        final TextView profileWeight = view.findViewById(R.id.profile_weight);
+
         TextView benchMax = view.findViewById(R.id.bench_press_max);
         TextView squatMax = view.findViewById(R.id.squat_max);
         TextView deadliftMax = view.findViewById(R.id.deadlift_max);
@@ -70,8 +75,41 @@ public class ProfileFragment extends Fragment {
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-                dialog.setTitle("Edit Profile");
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+                View mView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
+                mBuilder.setTitle("Edit Profile");
+
+                final Spinner mSpinner = mView.findViewById(R.id.spin);
+                final TextInputEditText mAge = mView.findViewById(R.id.age);
+                final TextInputEditText mHeight = mView.findViewById(R.id.height);
+                final TextInputEditText mWeight = mView.findViewById(R.id.weight);
+
+                ArrayAdapter<String> adapter =  new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item,
+                        getResources().getStringArray(R.array.genderList));
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mSpinner.setAdapter(adapter);
+
+                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        profileGender.setText("Gender: " + mSpinner.getSelectedItem().toString());
+                        profileAge.setText("Age: " + mAge.getText().toString());
+                        profileHeight.setText(mHeight.getText().toString());
+                        profileWeight.setText(mWeight.getText().toString());
+                    }
+                });
+
+                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                // create and show the alert dialog
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
 
             }
         });
