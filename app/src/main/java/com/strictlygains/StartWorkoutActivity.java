@@ -70,23 +70,27 @@ public class StartWorkoutActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.setSuccess:
+                String weight = String.valueOf(weightET.getText());
+                // Loop through exercise history. If set weight is greater than Max, update Max
+                if (eHistoryList != null)
+                    for (int i = 0; i < eHistoryList.size(); i++) {
+                        if (eHistoryList.get(i).getName().equals(currentWorkout.getExercise(exerciseIndex).getName())) {
+                            if (!weight.equals("0") && Double.parseDouble(weight) > eHistoryList.get(i).getMax()) {
+                                eHistoryList.get(i).setMax(Double.parseDouble(weight));
+                                // Update max weight
+                                DataHelper.updateExerciseHistory(this, eHistoryList);
+                            }
+                        }
+                    }
+
                 if(setNum < totalSetNum) {
                     currentSet = currentWorkout.getExercise(exerciseIndex).getSet(setIndex++);
                     currentSet.setSuccess(true);
                     updateSet(); // in case the user edited any text fields
                     updateUI();
-
-                    String weight = String.valueOf(weightET.getText());
-                    // Loop through exercise history. If set weight is greater than Max, update Max
-                    if (eHistoryList != null)
-                        for (int i = 0; i < eHistoryList.size(); i++) {
-                            if (eHistoryList.get(i).getName().equals(currentWorkout.getExercise(exerciseIndex).getName())) {
-                                if (!weight.equals("0") && Double.parseDouble(weight) > eHistoryList.get(i).getMax()) {
-                                    eHistoryList.get(i).setMax(Double.parseDouble(weight));
-                                }
-                            }
-                        }
                 }
+
+
                 else {
                     currentSet.setSuccess(true);
                     nextExercise.performClick();

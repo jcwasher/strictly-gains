@@ -1,30 +1,28 @@
 package com.strictlygains;
 
-        import java.util.Date;
-        import android.os.Bundle;
-        import android.view.LayoutInflater;
-        import android.view.Menu;
-        import android.view.MenuInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-        import androidx.annotation.NonNull;
-        import androidx.annotation.Nullable;
-        import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-        import com.github.mikephil.charting.charts.LineChart;
-        import com.github.mikephil.charting.components.XAxis;
-        import com.github.mikephil.charting.data.Entry;
-        import com.github.mikephil.charting.data.LineData;
-        import com.github.mikephil.charting.data.LineDataSet;
-        import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-        import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
-        import java.io.File;
-        import java.text.SimpleDateFormat;
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.Objects;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class ProgressFragment extends Fragment {
 
@@ -66,9 +64,9 @@ public class ProgressFragment extends Fragment {
                 System.out.println(Arrays.toString(fList));
                 // ignore the workout template
                 if(!f.getName().equals("userExercises.json")
-                        && !f.getName().equals("exerciseHistory.json")
-                        && !f.getName().contains("userWorkout_")
-                        && !f.getName().equals("currentWorkout.json")) {
+                    && !f.getName().equals("exerciseHistory.json")
+                    && !f.getName().contains("userWorkout_")
+                    && !f.getName().equals("currentWorkout.json")) {
                     // get the exercise list associated with workout tied to File f
                     ArrayList<Exercise> eList = DataHelper.loadWorkoutExercises(getContext(), f.getName());
                     // parse through each exercise
@@ -91,12 +89,6 @@ public class ProgressFragment extends Fragment {
                             for(Set s : e.getSetList()) {
                                 if((s.getWeight() > localMax) && s.isSuccess())
                                     localMax = (float)s.getWeight();
-                            }
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM");
-                            float date = 0;
-                            for(Set s : e.getSetList()) {
-                                String d = sdf.format(new Date());
-                                date = Float.parseFloat(d);
                             }
                             // access the corresponding entry list and add the new max
                             exerciseEntries.get(e.getID()-1).add(new Entry(x, localMax));
